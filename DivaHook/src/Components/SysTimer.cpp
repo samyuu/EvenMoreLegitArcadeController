@@ -1,4 +1,5 @@
 #include "SysTimer.h"
+#include "../Constants.h"
 
 namespace DivaHook::Components
 {

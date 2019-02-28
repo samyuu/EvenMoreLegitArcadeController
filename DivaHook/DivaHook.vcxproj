@@ -92,6 +92,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\DebugComponent.h" />
+    <ClInclude Include="src\Components\GameState.h" />
+    <ClInclude Include="src\Components\InputBufferType.h" />
+    <ClInclude Include="src\Constants.h" />
     <ClInclude Include="src\Input\MouseState.h" />
     <ClInclude Include="src\Input\Mouse.h" />
     <ClInclude Include="src\Input\KeyConfig\Config.h" />
@@ -102,20 +106,22 @@
     <ClInclude Include="src\Input\KeyboardBinding.h" />
     <ClInclude Include="src\Input\IInputBinding.h" />
     <ClInclude Include="src\Components\EmulatorComponent.h" />
-    <ClInclude Include="src\EnumBitwiseOperations.h" />
+    <ClInclude Include="src\Utilities\EnumBitwiseOperations.h" />
     <ClInclude Include="src\Input\IInputDevice.h" />
     <ClInclude Include="src\Components\JvsButtons.h" />
-    <ClInclude Include="src\Components\JvsEmulator.h" />
-    <ClInclude Include="src\Components\JvsState.h" />
+    <ClInclude Include="src\Components\InputEmulator.h" />
+    <ClInclude Include="src\Components\InputState.h" />
     <ClInclude Include="src\Input\Keyboard.h" />
     <ClInclude Include="src\Input\KeyboardState.h" />
-    <ClInclude Include="src\StringOperations\Operations.h" />
+    <ClInclude Include="src\Utilities\Operations.h" />
     <ClInclude Include="src\Components\SysTimer.h" />
+    <ClInclude Include="src\Utilities\Stopwatch.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="src\Components\TouchPanelEmulator.h" />
     <ClInclude Include="src\Components\TouchState.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\DebugComponent.cpp" />
     <ClCompile Include="src\Input\MouseState.cpp" />
     <ClCompile Include="src\Input\Mouse.cpp" />
     <ClCompile Include="src\Input\KeyConfig\Config.cpp" />
@@ -127,14 +133,15 @@
     <ClCompile Include="src\Input\IInputBinding.cpp" />
     <ClCompile Include="src\dllmain.cpp" />
     <ClCompile Include="src\Components\EmulatorComponent.cpp" />
-    <ClCompile Include="src\Components\JvsEmulator.cpp" />
-    <ClCompile Include="src\Components\JvsState.cpp" />
+    <ClCompile Include="src\Components\InputEmulator.cpp" />
+    <ClCompile Include="src\Components\InputState.cpp" />
     <ClCompile Include="src\Input\Keyboard.cpp" />
     <ClCompile Include="src\Input\KeyboardState.cpp" />
     <ClCompile Include="src\Components\TouchPanelEmulator.cpp" />
-    <ClCompile Include="src\StringOperations\Operations.cpp" />
+    <ClCompile Include="src\Utilities\Operations.cpp" />
     <ClCompile Include="src\Components\TouchState.cpp" />
     <ClCompile Include="src\Components\SysTimer.cpp" />
+    <ClCompile Include="src\Utilities\Stopwatch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="rom\keyconfig.txt" />

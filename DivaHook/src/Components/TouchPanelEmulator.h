@@ -6,8 +6,6 @@ namespace DivaHook::Components
 {
 	class TouchPanelEmulator : public EmulatorComponent
 	{
-		const int TASK_TOUCH_ADDRESS = 0x0108CD60;
-
 	public:
 		TouchPanelEmulator();
 		~TouchPanelEmulator();
@@ -16,7 +14,8 @@ namespace DivaHook::Components
 		virtual void Update() override;
 		virtual void UpdateInput() override;
 
-		TouchState* State;
+	private:
+		TouchState* state;
 		TouchState* GetTouchStatePtr(int address);
 	};
 }
