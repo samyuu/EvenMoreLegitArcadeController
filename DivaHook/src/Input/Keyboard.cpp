@@ -20,8 +20,12 @@ namespace DivaHook::Input
 	{
 		lastState = currentState;
 
-		for (BYTE i = 0; i < 0xFF; i++)
+		for (BYTE i = 0; i < KEYBOARD_KEYS; i++)
+		{
 			currentState.KeyStates[i] = GetAsyncKeyState(i) < 0;
+
+			KeyDoubleTapStates[i] = IsTapped(i) ? KeyDoubleTapWatches[i].Restart() <= DOUBLE_TAP_THRESHOLD : false;
+		}
 	}
 
 	bool Keyboard::IsDown(BYTE keycode)
@@ -37,6 +41,11 @@ namespace DivaHook::Input
 	bool Keyboard::IsTapped(BYTE keycode)
 	{
 		return IsDown(keycode) && WasUp(keycode);
+	}
+
+	bool Keyboard::IsDoubleTapped(BYTE keycode)
+	{
+		return KeyDoubleTapStates[keycode];
 	}
 
 	bool Keyboard::IsReleased(BYTE keycode)

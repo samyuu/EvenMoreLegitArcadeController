@@ -15,5 +15,7 @@ namespace DivaHook::Input
 
 		bool IsDown() override;
 		bool IsTapped() override;
+		bool IsReleased() override;
+		bool IsDoubleTapped() override;
 	};
 }

@@ -20,4 +20,14 @@ namespace DivaHook::Input
 	{
 		return Keyboard::GetInstance()->IsTapped(Keycode);
 	}
+
+	bool KeyboardBinding::IsReleased()
+	{
+		return Keyboard::GetInstance()->IsReleased(Keycode);
+	}
+
+	bool KeyboardBinding::IsDoubleTapped()
+	{
+		return Keyboard::GetInstance()->IsDoubleTapped(Keycode);
+	}
 }

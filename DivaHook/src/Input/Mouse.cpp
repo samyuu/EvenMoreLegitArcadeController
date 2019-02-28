@@ -1,4 +1,5 @@
 #include "Mouse.h"
+#include "../MainModule.h"
 
 namespace DivaHook::Input
 {
@@ -18,12 +19,31 @@ namespace DivaHook::Input
 
 	POINT Mouse::GetPosition()
 	{
-		return currentState.point;
+		return currentState.Position;
+	}
+
+	POINT Mouse::GetRelativePosition()
+	{
+		return currentState.RelativePosition;
+	}
+
+	POINT Mouse::GetDeltaPosition()
+	{
+		return 
+		{ 
+			currentState.Position.x - lastState.Position.x, 
+			currentState.Position.y - lastState.Position.y 
+		};
 	}
 
 	void Mouse::PollInput()
 	{
 		lastState = currentState;
-		GetCursorPos(&currentState.point);
+
+		GetCursorPos(&currentState.Position);
+		currentState.RelativePosition = currentState.Position;
+
+		if (MainModule::DivaWindowHandle != NULL)
+			ScreenToClient(MainModule::DivaWindowHandle, &currentState.RelativePosition);
 	}
 }

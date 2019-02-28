@@ -13,8 +13,11 @@ namespace DivaHook::Input
 		~Binding();
 
 		void AddBinding(IInputBinding* inputBinding);
+
 		bool AnyDown();
 		bool AnyTapped();
+		bool AnyReleased();
+		bool AnyDoubleTapped();
 	};
 }
 

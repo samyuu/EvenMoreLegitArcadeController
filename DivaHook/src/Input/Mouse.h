@@ -11,6 +11,8 @@ namespace DivaHook::Input
 
 		void PollInput() override;
 		POINT GetPosition();
+		POINT GetRelativePosition();
+		POINT GetDeltaPosition();
 
 	private:
 		Mouse();

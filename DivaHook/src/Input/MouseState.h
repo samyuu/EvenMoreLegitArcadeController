@@ -5,7 +5,8 @@ namespace DivaHook::Input
 {
 	struct MouseState
 	{
-		POINT point;
+		POINT Position;
+		POINT RelativePosition;
 	};
 }
 

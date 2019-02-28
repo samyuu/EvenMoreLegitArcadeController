@@ -38,4 +38,26 @@ namespace DivaHook::Input
 
 		return false;
 	}
+
+	bool Binding::AnyReleased()
+	{
+		for (auto& binding : InputBindings)
+		{
+			if (binding->IsReleased())
+				return true;
+		}
+
+		return false;
+	}
+
+	bool Binding::AnyDoubleTapped()
+	{
+		for (auto& binding : InputBindings)
+		{
+			if (binding->IsDoubleTapped())
+				return true;
+		}
+
+		return false;
+	}
 }
