@@ -1,7 +1,7 @@
 #pragma once
 #include "Operations.h"
 
-namespace DivaHook::StringOperations
+namespace DivaHook::Utilities
 {
 	std::vector<std::string> Split(const std::string& str, const std::string& delim)
 	{
