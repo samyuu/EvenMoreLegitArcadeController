@@ -1,23 +1,24 @@
 #include <iostream>
 #include "windows.h"
-#include "JvsEmulator.h"
+#include "InputEmulator.h"
 #include <fstream>
 #include <algorithm>
 #include <filesystem>
+#include "../Constants.h"
 #include "../MainModule.h"
-#include "../EnumBitwiseOperations.h"
 #include "../Input/Mouse.h"
 #include "../Input/Keyboard.h"
 #include "../Input/KeyboardBinding.h"
 #include "../Input/Binding.h"
 #include "../Input/KeyConfig/Config.h"
-#include "../StringOperations/Operations.h"
+#include "../Utilities/Operations.h"
+#include "../Utilities/EnumBitwiseOperations.h"
 
 const std::string KEY_CONFIG_FILE_NAME = "keyconfig.ini";
 
 using namespace DivaHook::Input;
 using namespace DivaHook::Input::KeyConfig;
-using namespace DivaHook::StringOperations;
+using namespace DivaHook::Utilities;
 
 namespace fs = std::filesystem;
 
@@ -35,11 +36,11 @@ namespace DivaHook::Components
 	Binding* LeftBinding;
 	Binding* RightBinding;
 
-	JvsEmulator::JvsEmulator()
+	InputEmulator::InputEmulator()
 	{
 	}
 
-	JvsEmulator::~JvsEmulator()
+	InputEmulator::~InputEmulator()
 	{
 		delete TestBinding;
 		delete ServiceBinding;
@@ -54,9 +55,9 @@ namespace DivaHook::Components
 		Config::Keymap.clear();
 	}
 
-	void JvsEmulator::Initialize()
+	void InputEmulator::Initialize()
 	{
-		jvsState = GetJvsStatePtr(JVS_STATE_PTR_ADDRESS);
+		inputState = GetInputStatePtr(INPUT_STATE_PTR_ADDRESS);
 
 		//printf("JvsEmulator::Initialize(): Test\n");
 
@@ -111,17 +112,17 @@ namespace DivaHook::Components
 				keys = Split(conf->second, ",");
 			}
 			else
-			{ 
-				keys = defaultKeys; 
+			{
+				keys = defaultKeys;
 			}
 
 			for (std::string key : keys)
 			{
 				Trim(key);
 				// Applies only for Single-Character keys
-				if (key.length() == 1) 
+				if (key.length() == 1)
 				{
-					bindObj.AddBinding(new KeyboardBinding(key[0])); 
+					bindObj.AddBinding(new KeyboardBinding(key[0]));
 				}
 				else // for special key names
 				{
@@ -129,7 +130,7 @@ namespace DivaHook::Components
 					if (keycode != Config::Keymap.end()) // name is known in the special keys map
 					{
 						bindObj.AddBinding(new KeyboardBinding(keycode->second));
-					} 
+					}
 					//else { printf("Bad key name!? Key: %s", key.c_str()); }
 				}
 			}
@@ -146,82 +147,102 @@ namespace DivaHook::Components
 		BindConfigKeys("JVS_RIGHT", *RightBinding, { "E", "O" });
 	}
 
-	void JvsEmulator::Update()
+	void InputEmulator::Update()
 	{
-		// to reset the button state once focus is lost
-		jvsState->TappedState = JVS_NONE;
-		jvsState->DownState = JVS_NONE;
+		return;
 	}
 
-	void JvsEmulator::UpdateInput()
+	void InputEmulator::OnFocusLost()
 	{
-		jvsState->TappedState = GetJvsTappedState();
-		jvsState->DownState = GetJvsDownState();
+		// to prevent buttons from being "stuck"
+		inputState->ClearState();
+	}
+
+	void InputEmulator::UpdateInput()
+	{
+		auto tappedFunc = [](void* binding) { return ((Binding*)binding)->AnyTapped(); };
+		auto releasedFunc = [](void* binding) { return ((Binding*)binding)->AnyReleased(); };
+		auto downFunc = [](void* binding) { return ((Binding*)binding)->AnyDown(); };
+		auto doubleTapFunc = [](void* binding) { return ((Binding*)binding)->AnyDoubleTapped(); };
+
+		inputState->Tapped.Buttons = GetJvsButtonsState(tappedFunc);
+		inputState->Released.Buttons = GetJvsButtonsState(releasedFunc);
+		inputState->Down.Buttons = GetJvsButtonsState(downFunc);
+		inputState->DoubleTapped.Buttons = GetJvsButtonsState(doubleTapFunc);
 
 		// repress held down buttons to not block input
-		jvsState->DownState ^= jvsState->TappedState;
+		inputState->Down.Buttons ^= inputState->Tapped.Buttons;
+
+		auto mouse = Mouse::GetInstance();
+
+		auto pos = mouse->GetRelativePosition();
+		inputState->MouseX = (int)pos.x;
+		inputState->MouseY = (int)pos.y;
+
+		auto deltaPos = mouse->GetDeltaPosition();
+		inputState->MouseDeltaX = (int)deltaPos.x;
+		inputState->MouseDeltaY = (int)deltaPos.y;
+
+		UpdateInputBit(5, VK_LEFT);
+		UpdateInputBit(6, VK_RIGHT);
+
+		UpdateInputBit(39, 'A');
+		UpdateInputBit(55, 'Q');
+		UpdateInputBit(57, 'S'); // unsure
+		UpdateInputBit(61, 'W');
+		UpdateInputBit(63, 'Y');
+		UpdateInputBit(84, 'L'); // unsure
+		
+		UpdateInputBit(80, VK_RETURN);
+		UpdateInputBit(91, VK_UP);
+		UpdateInputBit(93, VK_DOWN);
+		
+		UpdateInputBit(96, MK_LBUTTON);
+		UpdateInputBit(97, VK_MBUTTON);
+		UpdateInputBit(98, MK_RBUTTON);
 	}
 
-	JvsState* JvsEmulator::GetJvsStatePtr(int address)
+	InputState* InputEmulator::GetInputStatePtr(int address)
 	{
-		return (JvsState*)(*(int*)address);
+		return (InputState*)(*(int*)address);
 	}
 
-	JvsButtons JvsEmulator::GetJvsTappedState()
+	JvsButtons InputEmulator::GetJvsButtonsState(bool(*buttonTestFunc)(void*))
 	{
 		JvsButtons buttons = JVS_NONE;
 
-		if (TestBinding->AnyTapped())
+		if (buttonTestFunc(TestBinding))
 			buttons |= JVS_TEST;
-		if (ServiceBinding->AnyTapped())
+		if (buttonTestFunc(ServiceBinding))
 			buttons |= JVS_SERVICE;
 
-		if (StartBinding->AnyTapped())
+		if (buttonTestFunc(StartBinding))
 			buttons |= JVS_START;
 
-		if (SankakuBinding->AnyTapped())
+		if (buttonTestFunc(SankakuBinding))
 			buttons |= JVS_TRIANGLE;
-		if (ShikakuBinding->AnyTapped())
+		if (buttonTestFunc(ShikakuBinding))
 			buttons |= JVS_SQUARE;
-		if (BatsuBinding->AnyTapped())
+		if (buttonTestFunc(BatsuBinding))
 			buttons |= JVS_CROSS;
-		if (MaruBinding->AnyTapped())
+		if (buttonTestFunc(MaruBinding))
 			buttons |= JVS_CIRCLE;
 
-		if (LeftBinding->AnyTapped())
+		if (buttonTestFunc(LeftBinding))
 			buttons |= JVS_L;
-		if (RightBinding->AnyTapped())
+		if (buttonTestFunc(RightBinding))
 			buttons |= JVS_R;
 
 		return buttons;
 	}
 
-	JvsButtons JvsEmulator::GetJvsDownState()
+	void InputEmulator::UpdateInputBit(uint32_t bit, uint8_t keycode) 
 	{
-		JvsButtons buttons = JVS_NONE;
+		auto keyboard = Keyboard::GetInstance();
 
-		if (TestBinding->AnyDown())
-			buttons |= JVS_TEST;
-		if (ServiceBinding->AnyDown())
-			buttons |= JVS_SERVICE;
-
-		if (StartBinding->AnyDown())
-			buttons |= JVS_START;
-
-		if (SankakuBinding->AnyDown())
-			buttons |= JVS_TRIANGLE;
-		if (ShikakuBinding->AnyDown())
-			buttons |= JVS_SQUARE;
-		if (BatsuBinding->AnyDown())
-			buttons |= JVS_CROSS;
-		if (MaruBinding->AnyDown())
-			buttons |= JVS_CIRCLE;
-
-		if (LeftBinding->AnyDown())
-			buttons |= JVS_L;
-		if (RightBinding->AnyDown())
-			buttons |= JVS_R;
-
-		return buttons;
+		inputState->SetBit(bit, keyboard->IsTapped(keycode), INPUT_TAPPED);
+		inputState->SetBit(bit, keyboard->IsReleased(keycode), INPUT_RELEASED);
+		inputState->SetBit(bit, keyboard->IsDown(keycode), INPUT_DOWN);
+		inputState->SetBit(bit, keyboard->IsDoubleTapped(keycode), INPUT_DOUBLE_TAPPED);
 	}
 }
