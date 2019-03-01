@@ -6,7 +6,7 @@ namespace DivaHook::Components
 {
 	const int MAX_BUTTON_BIT = 0x6F;
 
-	// The button state is large than the size of a register
+	// The button state is larger than the size of a register
 	// but only the first 32 bits are used during normal gameplay
 	// so this will provide the convenience of still being able to access them through a bit field
 	union ButtonState

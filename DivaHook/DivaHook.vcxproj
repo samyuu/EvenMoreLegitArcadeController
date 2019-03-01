@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\DebugComponent.cpp" />
+    <ClCompile Include="src\Components\PlayerData.h" />
     <ClCompile Include="src\Input\MouseState.cpp" />
     <ClCompile Include="src\Input\Mouse.cpp" />
     <ClCompile Include="src\Input\KeyConfig\Config.cpp" />

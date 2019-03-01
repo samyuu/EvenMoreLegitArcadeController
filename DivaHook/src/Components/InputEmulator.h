@@ -10,6 +10,18 @@ namespace DivaHook::Components
 	class InputEmulator : public EmulatorComponent
 	{
 	public:
+		Input::Binding* TestBinding;
+		Input::Binding* ServiceBinding;
+
+		Input::Binding* StartBinding;
+		Input::Binding* SankakuBinding;
+		Input::Binding* ShikakuBinding;
+		Input::Binding* BatsuBinding;
+		Input::Binding* MaruBinding;
+		
+		Input::Binding* LeftBinding;
+		Input::Binding* RightBinding;
+		
 		InputEmulator();
 		~InputEmulator();
 

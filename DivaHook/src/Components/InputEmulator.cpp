@@ -24,18 +24,6 @@ namespace fs = std::filesystem;
 
 namespace DivaHook::Components
 {
-	Binding* TestBinding;
-	Binding* ServiceBinding;
-
-	Binding* StartBinding;
-	Binding* SankakuBinding;
-	Binding* ShikakuBinding;
-	Binding* BatsuBinding;
-	Binding* MaruBinding;
-
-	Binding* LeftBinding;
-	Binding* RightBinding;
-
 	InputEmulator::InputEmulator()
 	{
 	}
@@ -44,11 +32,13 @@ namespace DivaHook::Components
 	{
 		delete TestBinding;
 		delete ServiceBinding;
+
 		delete StartBinding;
 		delete SankakuBinding;
 		delete ShikakuBinding;
 		delete BatsuBinding;
 		delete MaruBinding;
+
 		delete LeftBinding;
 		delete RightBinding;
 

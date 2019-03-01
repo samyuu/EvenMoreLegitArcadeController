@@ -161,6 +161,9 @@
     <ClCompile Include="src\Components\InputState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Components\PlayerData.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rom\keyconfig.txt" />
