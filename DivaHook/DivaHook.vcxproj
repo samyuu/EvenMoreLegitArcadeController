@@ -92,6 +92,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\FileSystem\ConfigFile.h" />
     <ClInclude Include="src\Components\DebugComponent.h" />
     <ClInclude Include="src\Components\GameState.h" />
     <ClInclude Include="src\Components\InputBufferType.h" />
@@ -119,8 +120,10 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="src\Components\TouchPanelEmulator.h" />
     <ClInclude Include="src\Components\TouchState.h" />
+    <ClInclude Include="src\FileSystem\TextFile.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\FileSystem\ConfigFile.cpp" />
     <ClCompile Include="src\Components\DebugComponent.cpp" />
     <ClCompile Include="src\Components\PlayerData.h" />
     <ClCompile Include="src\Input\MouseState.cpp" />
@@ -143,6 +146,7 @@
     <ClCompile Include="src\Components\TouchState.cpp" />
     <ClCompile Include="src\Components\SysTimer.cpp" />
     <ClCompile Include="src\Utilities\Stopwatch.cpp" />
+    <ClCompile Include="src\FileSystem\TextFile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="rom\keyconfig.txt" />

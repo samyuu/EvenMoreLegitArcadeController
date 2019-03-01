@@ -1,5 +1,6 @@
 #pragma once
 #include <Windows.h>
+#include <string>
 
 namespace DivaHook
 {
@@ -11,6 +12,8 @@ namespace DivaHook
 
 		static HWND DivaWindowHandle;
 		static HMODULE Module;
+
+		static std::string GetModuleDirectory();
 	};
 }
 

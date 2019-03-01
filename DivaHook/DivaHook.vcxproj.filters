@@ -96,6 +96,12 @@
     <ClInclude Include="src\Components\InputState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\FileSystem\ConfigFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FileSystem\TextFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\EmulatorComponent.cpp">
@@ -162,6 +168,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Components\PlayerData.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FileSystem\ConfigFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FileSystem\TextFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,9 +1,6 @@
 #include <iostream>
 #include "windows.h"
 #include "InputEmulator.h"
-#include <fstream>
-#include <algorithm>
-#include <filesystem>
 #include "../Constants.h"
 #include "../MainModule.h"
 #include "../Input/Mouse.h"
@@ -13,14 +10,13 @@
 #include "../Input/KeyConfig/Config.h"
 #include "../Utilities/Operations.h"
 #include "../Utilities/EnumBitwiseOperations.h"
+#include "../FileSystem/ConfigFile.h"
 
 const std::string KEY_CONFIG_FILE_NAME = "keyconfig.ini";
 
 using namespace DivaHook::Input;
 using namespace DivaHook::Input::KeyConfig;
 using namespace DivaHook::Utilities;
-
-namespace fs = std::filesystem;
 
 namespace DivaHook::Components
 {
@@ -49,8 +45,6 @@ namespace DivaHook::Components
 	{
 		inputState = GetInputStatePtr(INPUT_STATE_PTR_ADDRESS);
 
-		//printf("JvsEmulator::Initialize(): Test\n");
-
 		TestBinding = new Binding();
 		ServiceBinding = new Binding();
 		StartBinding = new Binding();
@@ -63,78 +57,18 @@ namespace DivaHook::Components
 		LeftBinding = new Binding();
 		RightBinding = new Binding();
 
-		std::unordered_map<std::string, std::string> keyconfig;
+		FileSystem::ConfigFile configFile(MainModule::GetModuleDirectory(), KEY_CONFIG_FILE_NAME);
+		configFile.OpenRead();
 
-		CHAR modulePathBuffer[MAX_PATH];
-		if (GetModuleFileNameA(MainModule::Module, modulePathBuffer, MAX_PATH))
-		{
-			fs::path modulePath(modulePathBuffer);
-			fs::path configPath = modulePath.parent_path() / KEY_CONFIG_FILE_NAME;
-
-			//printf("KeyConfig path = %s\n", configPath.string().c_str());
-
-			if (fs::exists(configPath))
-			{
-				std::ifstream configfile(configPath.string().c_str());
-				if (configfile.is_open())
-				{
-					std::string line;
-					while (std::getline(configfile, line))
-					{
-						if (line[0] == '#') continue;
-						auto splitline = Split(line, "=");
-						Trim(splitline[0]);
-						Trim(splitline[1]);
-						keyconfig.insert(std::make_pair(splitline[0], splitline[1]));
-					}
-					configfile.close();
-				}
-			}
-		}
-
-		auto BindConfigKeys = [&](const char* configKeyName, Binding& bindObj, std::vector<std::string> defaultKeys)->void
-		{
-			std::vector<std::string> keys;
-			auto conf = keyconfig.find(configKeyName);
-
-			if (conf != keyconfig.end()) // config variable was found in the ini
-			{
-				keys = Split(conf->second, ",");
-			}
-			else
-			{
-				keys = defaultKeys;
-			}
-
-			for (std::string key : keys)
-			{
-				Trim(key);
-				// Applies only for Single-Character keys
-				if (key.length() == 1)
-				{
-					bindObj.AddBinding(new KeyboardBinding(key[0]));
-				}
-				else // for special key names
-				{
-					auto keycode = Config::Keymap.find(key.c_str());
-					if (keycode != Config::Keymap.end()) // name is known in the special keys map
-					{
-						bindObj.AddBinding(new KeyboardBinding(keycode->second));
-					}
-					//else { printf("Bad key name!? Key: %s", key.c_str()); }
-				}
-			}
-		};
-
-		BindConfigKeys("JVS_TEST", *TestBinding, { "F1" });
-		BindConfigKeys("JVS_SERVICE", *ServiceBinding, { "F2" });
-		BindConfigKeys("JVS_START", *StartBinding, { "Enter" });
-		BindConfigKeys("JVS_TRIANGLE", *SankakuBinding, { "W", "I" });
-		BindConfigKeys("JVS_SQUARE", *ShikakuBinding, { "A", "J" });
-		BindConfigKeys("JVS_CROSS", *BatsuBinding, { "S", "K" });
-		BindConfigKeys("JVS_CIRCLE", *MaruBinding, { "D", "L" });
-		BindConfigKeys("JVS_LEFT", *LeftBinding, { "Q", "U" });
-		BindConfigKeys("JVS_RIGHT", *RightBinding, { "E", "O" });
+		Config::BindConfigKeys(configFile.ConfigMap, "JVS_TEST", *TestBinding, { "F1" });
+		Config::BindConfigKeys(configFile.ConfigMap, "JVS_SERVICE", *ServiceBinding, { "F2" });
+		Config::BindConfigKeys(configFile.ConfigMap, "JVS_START", *StartBinding, { "Enter" });
+		Config::BindConfigKeys(configFile.ConfigMap, "JVS_TRIANGLE", *SankakuBinding, { "W", "I" });
+		Config::BindConfigKeys(configFile.ConfigMap, "JVS_SQUARE", *ShikakuBinding, { "A", "J" });
+		Config::BindConfigKeys(configFile.ConfigMap, "JVS_CROSS", *BatsuBinding, { "S", "K" });
+		Config::BindConfigKeys(configFile.ConfigMap, "JVS_CIRCLE", *MaruBinding, { "D", "L" });
+		Config::BindConfigKeys(configFile.ConfigMap, "JVS_LEFT", *LeftBinding, { "Q", "U" });
+		Config::BindConfigKeys(configFile.ConfigMap, "JVS_RIGHT", *RightBinding, { "E", "O" });
 	}
 
 	void InputEmulator::Update()
@@ -182,11 +116,11 @@ namespace DivaHook::Components
 		UpdateInputBit(61, 'W');
 		UpdateInputBit(63, 'Y');
 		UpdateInputBit(84, 'L'); // unsure
-		
+
 		UpdateInputBit(80, VK_RETURN);
 		UpdateInputBit(91, VK_UP);
 		UpdateInputBit(93, VK_DOWN);
-		
+
 		UpdateInputBit(96, MK_LBUTTON);
 		UpdateInputBit(97, VK_MBUTTON);
 		UpdateInputBit(98, MK_RBUTTON);
@@ -226,7 +160,7 @@ namespace DivaHook::Components
 		return buttons;
 	}
 
-	void InputEmulator::UpdateInputBit(uint32_t bit, uint8_t keycode) 
+	void InputEmulator::UpdateInputBit(uint32_t bit, uint8_t keycode)
 	{
 		auto keyboard = Keyboard::GetInstance();
 

@@ -1,5 +1,7 @@
 #include "Config.h"
 #include "windows.h"
+#include "../KeyboardBinding.h"
+#include "../../Utilities/Operations.h"
 
 namespace DivaHook::Input::KeyConfig
 {
@@ -79,4 +81,46 @@ namespace DivaHook::Input::KeyConfig
 		{ "ESC",    VK_ESCAPE },
 		{ "Escape", VK_ESCAPE },
 	};
+
+	void Config::BindConfigKeys(std::unordered_map<std::string, std::string> &configMap, const char *configKeyName, Binding &bindObj, std::vector<std::string> defaultKeys)
+	{
+		std::vector<std::string> keys;
+
+		auto configPair = configMap.find(configKeyName);
+
+		// config variable was found in the ini
+		if (configPair != configMap.end())
+		{
+			keys = Utilities::Split(configPair->second, ",");
+		}
+		else
+		{
+			keys = defaultKeys;
+		}
+
+		for (std::string key : keys)
+		{
+			Utilities::Trim(key);
+
+			// Applies only for Single-Character keys
+			if (key.length() == 1)
+			{
+				bindObj.AddBinding(new KeyboardBinding(key[0]));
+			}
+			else // for special key names
+			{
+				auto keycode = Config::Keymap.find(key.c_str());
+
+				// name is known in the special keys map
+				if (keycode != Config::Keymap.end())
+				{
+					bindObj.AddBinding(new KeyboardBinding(keycode->second));
+				}
+				else
+				{
+					// printf("Bad key name!? Key: %s", key.c_str());
+				}
+			}
+		}
+	}
 }
