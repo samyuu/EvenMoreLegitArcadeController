@@ -11,6 +11,11 @@ namespace DivaHook::Components
 	{
 	}
 
+	const char* SysTimer::GetDisplayName()
+	{
+		return "sys_timer";
+	}
+
 	void SysTimer::Initialize()
 	{
 		selPvTime = GetSysTimePtr(SEL_PV_TIME_ADDRESS);
@@ -20,11 +25,6 @@ namespace DivaHook::Components
 	{
 		// account for the decrement that occures during this frame
 		*selPvTime = SEL_PV_FREEZE_TIME * SYS_TIME_FACTOR + 1;
-	}
-
-	void SysTimer::UpdateInput()
-	{
-		return;
 	}
 
 	int* SysTimer::GetSysTimePtr(int address)

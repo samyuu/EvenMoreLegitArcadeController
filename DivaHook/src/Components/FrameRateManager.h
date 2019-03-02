@@ -3,17 +3,21 @@
 
 namespace DivaHook::Components
 {
-	class DebugComponent : public EmulatorComponent
+	class FrameRateManager : public EmulatorComponent
 	{
 	public:
-		DebugComponent();
-		~DebugComponent();
+		FrameRateManager();
+		~FrameRateManager();
 
 		virtual const char* GetDisplayName() override;
 
 		virtual void Initialize() override;
 		virtual void Update() override;
-		virtual void UpdateInput() override;
+
+	private:
+		float *frameSpeed;
+		float *aetFrameDuration;
+		float defaultAetFrameDuration;
 	};
 }
 

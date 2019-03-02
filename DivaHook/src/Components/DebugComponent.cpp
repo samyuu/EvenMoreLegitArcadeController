@@ -9,14 +9,17 @@
 
 namespace DivaHook::Components
 {
-	std::string *PlayerName;
-
 	DebugComponent::DebugComponent()
 	{
 	}
 
 	DebugComponent::~DebugComponent()
 	{
+	}
+
+	const char* DebugComponent::GetDisplayName()
+	{
+		return "debug_component";
 	}
 
 	void DebugComponent::Initialize()
@@ -26,16 +29,7 @@ namespace DivaHook::Components
 
 	void DebugComponent::Update()
 	{
-		PlayerData* playerData = (PlayerData*)PLAYER_DATA_ADDRESS;
-
-		if (PlayerName == nullptr)
-		{
-			PlayerName = new std::string(u8"‚m‚n|‚m‚`‚l‚d");
-			playerData->player_name = (char*)PlayerName->c_str();
-		}
-
-		playerData->btn_se_equip = 0;
-		playerData->vocaloid_point = 393939;
+		return;
 	}
 
 	void DebugComponent::UpdateInput()

@@ -12,9 +12,10 @@ namespace DivaHook::Components
 		SysTimer();
 		~SysTimer();
 
+		virtual const char* GetDisplayName() override;
+
 		virtual void Initialize() override;
 		virtual void Update() override;
-		virtual void UpdateInput() override;
 
 	private:
 		int* selPvTime;

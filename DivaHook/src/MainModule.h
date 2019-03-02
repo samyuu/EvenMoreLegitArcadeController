@@ -6,6 +6,9 @@ namespace DivaHook
 {
 	class MainModule
 	{
+	private:
+		static std::string *moduleDirectory;
+
 	public:
 		static const wchar_t* DivaWindowName;
 		static const wchar_t* GlutDefaultName;

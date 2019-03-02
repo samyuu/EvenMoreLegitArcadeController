@@ -11,4 +11,6 @@ namespace DivaHook::Utilities
 	void LeftTrim(std::string &s);
 	void RightTrim(std::string &s);
 	void Trim(std::string &s);
+	
+	std::string trim(const std::string& str, const std::string& whitespace = " \t");
 }

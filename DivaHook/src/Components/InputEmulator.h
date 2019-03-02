@@ -25,6 +25,8 @@ namespace DivaHook::Components
 		InputEmulator();
 		~InputEmulator();
 
+		virtual const char* GetDisplayName() override;
+
 		virtual void Initialize() override;
 		virtual void Update() override;
 		virtual void UpdateInput() override;

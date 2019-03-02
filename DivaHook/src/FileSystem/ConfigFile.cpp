@@ -14,6 +14,20 @@ namespace DivaHook::FileSystem
 		return;
 	}
 
+	bool ConfigFile::TryGetValue(const std::string &key, std::string *&value)
+	{
+		auto pair = ConfigMap.find(key);
+
+		bool found = pair != ConfigMap.end();
+
+		if (found)
+		{
+			value = new std::string(pair->second);
+		}
+
+		return found;
+	}
+
 	void ConfigFile::Parse(std::ifstream &fileStream)
 	{
 		std::string line;
@@ -32,7 +46,7 @@ namespace DivaHook::FileSystem
 		}
 	}
 
-	bool ConfigFile::IsComment(std::string &line)
+	bool ConfigFile::IsComment(const std::string &line)
 	{
 		return line[0] == '#' || line._Starts_with("//");
 	}

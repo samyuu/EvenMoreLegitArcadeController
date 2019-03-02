@@ -16,6 +16,11 @@ namespace DivaHook::Components
 	{
 	}
 
+	const char* TouchPanelEmulator::GetDisplayName()
+	{
+		return "touch_panel_emulator";
+	}
+
 	void TouchPanelEmulator::Initialize()
 	{
 		state = GetTouchStatePtr(TASK_TOUCH_ADDRESS);

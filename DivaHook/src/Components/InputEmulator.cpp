@@ -41,6 +41,11 @@ namespace DivaHook::Components
 		Config::Keymap.clear();
 	}
 
+	const char* InputEmulator::GetDisplayName()
+	{
+		return "input_emulator";
+	}
+
 	void InputEmulator::Initialize()
 	{
 		inputState = GetInputStatePtr(INPUT_STATE_PTR_ADDRESS);

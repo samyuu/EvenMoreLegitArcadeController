@@ -13,11 +13,13 @@ namespace DivaHook::FileSystem
 
 		std::unordered_map<std::string, std::string> ConfigMap;
 
+		bool TryGetValue(const std::string &key, std::string *&value);
+
 	protected:
 		virtual void Parse(std::ifstream &fileStream) override;
 
 	private:
-		bool IsComment(std::string &line);
+		bool IsComment(const std::string &line);
 	};
 }
 

@@ -92,6 +92,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\FrameRateManager.h" />
+    <ClInclude Include="src\Components\PlayerDataManager.h" />
     <ClInclude Include="src\FileSystem\ConfigFile.h" />
     <ClInclude Include="src\Components\DebugComponent.h" />
     <ClInclude Include="src\Components\GameState.h" />
@@ -123,6 +125,8 @@
     <ClInclude Include="src\FileSystem\TextFile.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\FrameRateManager.cpp" />
+    <ClCompile Include="src\Components\PlayerDataManager.cpp" />
     <ClCompile Include="src\FileSystem\ConfigFile.cpp" />
     <ClCompile Include="src\Components\DebugComponent.cpp" />
     <ClCompile Include="src\Components\PlayerData.h" />
