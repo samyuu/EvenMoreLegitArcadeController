@@ -19,7 +19,7 @@ namespace DivaHook::Components
 
 	private:
 		int* selPvTime;
-		int* GetSysTimePtr(int address);
+		int* GetSysTimePtr(void *address);
 	};
 }
 

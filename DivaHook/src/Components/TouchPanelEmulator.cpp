@@ -23,7 +23,7 @@ namespace DivaHook::Components
 
 	void TouchPanelEmulator::Initialize()
 	{
-		state = GetTouchStatePtr(TASK_TOUCH_ADDRESS);
+		state = GetTouchStatePtr((void*)TASK_TOUCH_ADDRESS);
 	}
 
 	void TouchPanelEmulator::Update()
@@ -47,8 +47,8 @@ namespace DivaHook::Components
 		state->Pressure = (float)(state->ContactType != 0);
 	}
 
-	TouchState* TouchPanelEmulator::GetTouchStatePtr(int address)
+	TouchPanelState* TouchPanelEmulator::GetTouchStatePtr(void *address)
 	{
-		return (TouchState*)address;
+		return (TouchPanelState*)address;
 	}
 }

@@ -2,6 +2,11 @@
 
 namespace Patch
 {
+	static bool EndsWith(const std::string& str, const std::string& suffix)
+	{
+		return str.size() >= suffix.size() && 0 == str.compare(str.size() - suffix.size(), suffix.size(), suffix);
+	}
+
 	Patcher::Patcher()
 	{
 	}
@@ -36,6 +41,12 @@ namespace Patch
 		if (patch == nullptr)
 		{
 			printf("Patcher::PatchProgram(): No patch has been loaded.\n");
+			return FALSE;
+		}
+
+		if (!EndsWith(executablePath, ".exe"))
+		{
+			printf("Patcher::PatchProgram(): The input file is not an executable\n");
 			return FALSE;
 		}
 

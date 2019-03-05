@@ -17,6 +17,7 @@ namespace DivaHook
 		static HMODULE Module;
 
 		static std::string GetModuleDirectory();
+		static RECT GetWindowBounds();
 	};
 }
 

@@ -1,6 +1,6 @@
 #pragma once
 #include "EmulatorComponent.h"
-#include "TouchState.h"
+#include "TouchPanelState.h"
 
 namespace DivaHook::Components
 {
@@ -17,8 +17,8 @@ namespace DivaHook::Components
 		virtual void UpdateInput() override;
 
 	private:
-		TouchState* state;
-		TouchState* GetTouchStatePtr(int address);
+		TouchPanelState* state;
+		TouchPanelState* GetTouchStatePtr(void *address);
 	};
 }
 

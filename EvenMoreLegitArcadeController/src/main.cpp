@@ -1,6 +1,6 @@
 #include "Injection/DllInjector.h"
 
-const char* EMLAC_VERSION = "3.10.00";
+const char* ELAC_VERSION = "3.10.00";
 
 const std::string DIVA_PROCESS_NAME = "diva.exe";
 const std::string DIVA_HOOK_DLL_NAME = "divahook.dll";
@@ -54,7 +54,7 @@ void PrintProgramInfo()
 
 	printf("// Even More Legit Arcade Controller (ELAC)			\n");
 	printf("//													\n");
-	printf("// v.%s                            -by samyuu       \n", EMLAC_VERSION);
+	printf("// v.%s                            -by samyuu       \n", ELAC_VERSION);
 	printf("// -------------------------------------------------\n");
 }
 

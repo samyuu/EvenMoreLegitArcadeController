@@ -18,7 +18,7 @@ namespace DivaHook::Components
 
 	void SysTimer::Initialize()
 	{
-		selPvTime = GetSysTimePtr(SEL_PV_TIME_ADDRESS);
+		selPvTime = GetSysTimePtr((void*)SEL_PV_TIME_ADDRESS);
 	}
 
 	void SysTimer::Update()
@@ -27,7 +27,7 @@ namespace DivaHook::Components
 		*selPvTime = SEL_PV_FREEZE_TIME * SYS_TIME_FACTOR + 1;
 	}
 
-	int* SysTimer::GetSysTimePtr(int address)
+	int* SysTimer::GetSysTimePtr(void *address)
 	{
 		return (int*)address;
 	}

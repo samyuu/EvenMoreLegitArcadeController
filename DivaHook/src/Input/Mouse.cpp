@@ -36,6 +36,19 @@ namespace DivaHook::Input
 		};
 	}
 
+	bool Mouse::HasMoved()
+	{
+		auto delta = GetDeltaPosition();
+		return delta.x != 0 || delta.y != 0;
+	}
+
+	void Mouse::SetPosition(int x, int y)
+	{
+		lastState.Position.x = x;
+		lastState.Position.y = y;
+		SetCursorPos(x, y);
+	}
+
 	void Mouse::PollInput()
 	{
 		lastState = currentState;

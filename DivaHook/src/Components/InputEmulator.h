@@ -36,7 +36,7 @@ namespace DivaHook::Components
 	private:
 		InputState* inputState;
 
-		InputState* GetInputStatePtr(int address);
+		InputState* GetInputStatePtr(void *address);
 		JvsButtons GetJvsButtonsState(bool(*buttonTestFunc)(void*));
 
 		void UpdateInputBit(uint32_t bit, uint8_t keycode);

@@ -13,6 +13,8 @@ namespace DivaHook::Input
 		POINT GetPosition();
 		POINT GetRelativePosition();
 		POINT GetDeltaPosition();
+		bool HasMoved();
+		void SetPosition(int x, int y);
 
 	private:
 		Mouse();

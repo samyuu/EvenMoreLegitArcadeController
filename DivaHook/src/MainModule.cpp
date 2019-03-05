@@ -26,4 +26,12 @@ namespace DivaHook
 
 		return *moduleDirectory;
 	}
+
+	RECT MainModule::GetWindowBounds()
+	{
+		RECT windowRect;
+		GetWindowRect(DivaWindowHandle, &windowRect);
+
+		return windowRect;
+	}
 }

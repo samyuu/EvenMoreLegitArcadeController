@@ -92,6 +92,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\Camera.h" />
+    <ClInclude Include="src\Components\CameraController.h" />
     <ClInclude Include="src\Components\FrameRateManager.h" />
     <ClInclude Include="src\Components\PlayerDataManager.h" />
     <ClInclude Include="src\FileSystem\ConfigFile.h" />
@@ -116,15 +118,19 @@
     <ClInclude Include="src\Components\InputState.h" />
     <ClInclude Include="src\Input\Keyboard.h" />
     <ClInclude Include="src\Input\KeyboardState.h" />
+    <ClInclude Include="src\Utilities\Math.h" />
     <ClInclude Include="src\Utilities\Operations.h" />
     <ClInclude Include="src\Components\SysTimer.h" />
     <ClInclude Include="src\Utilities\Stopwatch.h" />
+    <ClInclude Include="src\Utilities\Vec2.h" />
+    <ClInclude Include="src\Utilities\Vec3.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="src\Components\TouchPanelEmulator.h" />
-    <ClInclude Include="src\Components\TouchState.h" />
+    <ClInclude Include="src\Components\TouchPanelState.h" />
     <ClInclude Include="src\FileSystem\TextFile.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\CameraController.cpp" />
     <ClCompile Include="src\Components\FrameRateManager.cpp" />
     <ClCompile Include="src\Components\PlayerDataManager.cpp" />
     <ClCompile Include="src\FileSystem\ConfigFile.cpp" />
@@ -146,11 +152,14 @@
     <ClCompile Include="src\Input\Keyboard.cpp" />
     <ClCompile Include="src\Input\KeyboardState.cpp" />
     <ClCompile Include="src\Components\TouchPanelEmulator.cpp" />
+    <ClCompile Include="src\Utilities\Math.cpp" />
     <ClCompile Include="src\Utilities\Operations.cpp" />
-    <ClCompile Include="src\Components\TouchState.cpp" />
+    <ClCompile Include="src\Components\TouchPanelState.cpp" />
     <ClCompile Include="src\Components\SysTimer.cpp" />
     <ClCompile Include="src\Utilities\Stopwatch.cpp" />
     <ClCompile Include="src\FileSystem\TextFile.cpp" />
+    <ClCompile Include="src\Utilities\Vec2.cpp" />
+    <ClCompile Include="src\Utilities\Vec3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="rom\keyconfig.txt" />

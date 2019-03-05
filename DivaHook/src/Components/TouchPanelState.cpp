@@ -1,4 +1,4 @@
-#include "TouchState.h"
+#include "TouchPanelState.h"
 
 namespace DivaHook::Components
 {

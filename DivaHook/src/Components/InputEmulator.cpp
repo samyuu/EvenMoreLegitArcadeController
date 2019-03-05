@@ -48,7 +48,7 @@ namespace DivaHook::Components
 
 	void InputEmulator::Initialize()
 	{
-		inputState = GetInputStatePtr(INPUT_STATE_PTR_ADDRESS);
+		inputState = GetInputStatePtr((void*)INPUT_STATE_PTR_ADDRESS);
 
 		TestBinding = new Binding();
 		ServiceBinding = new Binding();
@@ -131,7 +131,7 @@ namespace DivaHook::Components
 		UpdateInputBit(98, MK_RBUTTON);
 	}
 
-	InputState* InputEmulator::GetInputStatePtr(int address)
+	InputState* InputEmulator::GetInputStatePtr(void *address)
 	{
 		return (InputState*)(*(int*)address);
 	}

@@ -16,8 +16,6 @@
 0x00459CD4 : 0x0001 : 65                                                                                    : 00 
 // NOP out sys_am sram/eprom initialization call 
 0x0045AF5A : 0x0005 : E8 B1 56 06 00																		: 90 90 90 90 90 
-// MOV 1 into eax instead of GraphicsDbd to always clear the framebuffer at all resolutions
-0x0045AFEB : 0x0006 : 8B 15 DC 5F F0 00																		: BA 01 00 00 00 90 
 // Return early to prevent null reference for some sys_am object
 0x004BF730 : 0x0006 : 56 8B F1 8B 0E 8B																		: B8 00 00 00 00 C3 
 // Ignore CLOSE SETTINGS check
@@ -30,6 +28,9 @@
 0x006521F3 : 0x0001 : 74																					: EB 
 // Always skip the SYSTEM_STARTUP_ERROR game state
 0x00652394 : 0x0002 : 8A C3																					: B0 01 
+// Ignore the EngineClear variable to clear the framebuffer at all resolutions
+0x0071708E : 0x0002 : 74 0C                                                                                 : 90 90 
+0x0071717D : 0x0001 : 75                                                                                    : EB 
 // Jump past the VP SelWatch button enabled checks
 0x00798108 : 0x0005 : E8 F3 01 E7 FF                                                                        : EB 2D 90 90 90 
 // Return early before resetting to the default PlayerData so we don't need to keep updating the PlayerData struct
@@ -49,7 +50,3 @@
 0x008082EC : 0x0001 : A4																					: 5A 
 // Avoid JVS related null reference
 0x00830E45 : 0x0005 : E8 E6 E8 C8 FF																		: 90 90 90 90 90 
-// For debug purposes
-// 0x0045AD12 : 0x0001 : 02																						: 00 
-// 0x0059F150 : 0x0002 : 32 C0																					: B0 01 
-// 0x0059F160 : 0x0002 : 32 C0																					: B0 01 

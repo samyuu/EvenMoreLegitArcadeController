@@ -2,7 +2,7 @@
 
 namespace DivaHook::Components
 {
-	struct TouchState
+	struct TouchPanelState
 	{
 		int Padding00[0x1A];
 		int ConnectionState;
