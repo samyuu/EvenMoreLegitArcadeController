@@ -175,13 +175,13 @@ namespace DivaHook::Components
 		Mouse::GetInstance()->SetPosition(centerX, centerY);
 	}
 
-	void CameraController::SetIsEnabled(bool value)
-	{
-		isEnabled = value;
-	}
-
 	bool CameraController::GetIsEnabled()
 	{
 		return isEnabled;
+	}
+
+	void CameraController::SetIsEnabled(bool value)
+	{
+		isEnabled = value;
 	}
 }

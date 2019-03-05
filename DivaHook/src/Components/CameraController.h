@@ -58,7 +58,7 @@ namespace DivaHook::Components
 			(void*)CAMERA_POS_SETTER_ADDRESS,
 			(void*)CAMERA_INTR_SETTER_ADDRESS,
 			(void*)CAMERA_ROT_SETTER_ADDRESS,
-			(void*)CAMERA_PERS_GETTER_ADDRESS,
+			(void*)CAMERA_PERS_SETTER_ADDRESS,
 		};
 	};
 }

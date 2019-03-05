@@ -4,7 +4,7 @@
 # file:			patch.txt
 # author:		samyuu
 # version:		3.10.00
-# date:			2019/03/01
+# date:			2019/03/05
 # image_base:	0x00400C00
 
 // Address : Length : Original bytes																		: Patched bytes
