@@ -72,7 +72,7 @@ struct PlayerData
 	int32_t field_EC;
 	int32_t field_F0;
 	int32_t field_F4;
-	int32_t field_F8;
+	int32_t level;
 	int32_t level_plate_id;
 	int32_t field_100;
 	int32_t vocaloid_point;

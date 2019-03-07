@@ -38,6 +38,7 @@ namespace DivaHook::Components
 		float commonRefreshRates[]
 		{
 			60.0f,
+			75.0f,
 			120.0f,
 			144.0f,
 			240.0f,
