@@ -26,8 +26,13 @@ namespace DivaHook::Components
 
 		delete UpBinding;
 		delete DownBinding;
+		delete ClockwiseBinding;
+		delete CounterClockwiseBinding;
+		delete ZoomInBinding;
+		delete ZoomOutBinding;
 		delete FastBinding;
 		delete SlowBinding;
+
 	}
 
 	const char* CameraController::GetDisplayName()
@@ -63,6 +68,16 @@ namespace DivaHook::Components
 		UpBinding->AddBinding(new KeyboardBinding(VK_SPACE));
 		DownBinding = new Binding();
 		DownBinding->AddBinding(new KeyboardBinding(VK_CONTROL));
+
+		ClockwiseBinding = new Binding();
+		ClockwiseBinding->AddBinding(new KeyboardBinding('E'));
+		CounterClockwiseBinding = new Binding();
+		CounterClockwiseBinding->AddBinding(new KeyboardBinding('Q'));
+
+		ZoomInBinding = new Binding();
+		ZoomInBinding->AddBinding(new KeyboardBinding('R'));
+		ZoomOutBinding = new Binding();
+		ZoomOutBinding->AddBinding(new KeyboardBinding('F'));
 
 		FastBinding = new Binding();
 		FastBinding->AddBinding(new KeyboardBinding(VK_SHIFT));
@@ -102,6 +117,12 @@ namespace DivaHook::Components
 		bool fast = FastBinding->AnyDown();
 		bool slow = SlowBinding->AnyDown();
 
+		bool clockwise = ClockwiseBinding->AnyDown();
+		bool counterclockwise = CounterClockwiseBinding->AnyDown();
+
+		bool zoomin = ZoomInBinding->AnyDown();
+		bool zoomout = ZoomOutBinding->AnyDown();
+
 		float speed = GetElapsedTime() * (fast ? fastSpeed : slow ? slowSpeed : normalSpeed);
 
 		if (forward ^ backward)
@@ -109,6 +130,12 @@ namespace DivaHook::Components
 
 		if (left ^ right)
 			camera->Position += PointFromAngle(verticalRotation + (right ? +90.0f : -90.0f), speed);
+
+		if(clockwise ^ counterclockwise)
+			camera->Rotation += speed * (clockwise ? -1.0f : +1.0f);
+
+		if(zoomin ^ zoomout)
+			camera->HorizontalFov += speed * (zoomin ? -1.0f : +1.0f);
 
 		if (up ^ down)
 			camera->Position.Y += speed * (up ? +0.25f : -0.25f);

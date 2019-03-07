@@ -21,6 +21,12 @@ namespace DivaHook::Components
 		Input::Binding* FastBinding;
 		Input::Binding* SlowBinding;
 
+		Input::Binding* ClockwiseBinding;
+		Input::Binding* CounterClockwiseBinding;
+
+		Input::Binding* ZoomInBinding;
+		Input::Binding* ZoomOutBinding;
+
 		CameraController();
 		~CameraController();
 
