@@ -34,12 +34,15 @@ namespace DivaHook::Components
 		playerData->skin_equip = customPlayerData.SkinEquip;
 		playerData->btn_se_equip = customPlayerData.BtnSeEquip;
 		playerData->vocaloid_point = customPlayerData.VocaloidPoint;
+		playerData->level_plate_id = customPlayerData.LevelPlateId;
 
 		for (int i = 0; i < sizeof(playerData->module_equip) / sizeof(int); i++)
 			playerData->module_equip[i] = customPlayerData.ModuleEquip[i];
 
 		if (customPlayerData.PlayerName != nullptr)
 			playerData->player_name = (char*)customPlayerData.PlayerName->c_str();
+		if (customPlayerData.LevelName != nullptr)
+			playerData->level_name = (char*)customPlayerData.LevelName->c_str();
 
 		//if (Input::Keyboard::GetInstance()->IsTapped(VK_F12))
 		//{
@@ -55,14 +58,15 @@ namespace DivaHook::Components
 		if (!config.OpenRead())
 			return;
 
-		std::string *customName;
+		std::string* customName;
+		std::string* levelName;
 
 		if (config.TryGetValue("player_name", customName))
 			customPlayerData.PlayerName = customName;
 
-		auto parseInt = [&](const std::string &key)
+		auto parseInt = [&](const std::string & key)
 		{
-			std::string *stringBuffer;
+			std::string* stringBuffer;
 
 			int result;
 
@@ -80,5 +84,9 @@ namespace DivaHook::Components
 		customPlayerData.VocaloidPoint = parseInt("vocaloid_point");
 		customPlayerData.ModuleEquip[0] = parseInt("module_equip[0]");
 		customPlayerData.ModuleEquip[1] = parseInt("module_equip[1]");
+
+		if (config.TryGetValue("level_name", levelName))
+			customPlayerData.LevelName = levelName;
+		customPlayerData.LevelPlateId = parseInt("level_plate_id");
 	}
 }
