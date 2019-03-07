@@ -17,7 +17,7 @@ namespace DivaHook::Components
 	{
 	}
 
-	const char* PlayerDataManager::GetDisplayName()
+	const char *PlayerDataManager::GetDisplayName()
 	{
 		return "player_data_manager";
 	}
@@ -31,10 +31,11 @@ namespace DivaHook::Components
 
 	void PlayerDataManager::Update()
 	{
+		playerData->level = customPlayerData.LevelNo;
+		playerData->level_plate_id = customPlayerData.LevelPlateId;
 		playerData->skin_equip = customPlayerData.SkinEquip;
 		playerData->btn_se_equip = customPlayerData.BtnSeEquip;
 		playerData->vocaloid_point = customPlayerData.VocaloidPoint;
-		playerData->level_plate_id = customPlayerData.LevelPlateId;
 
 		for (int i = 0; i < sizeof(playerData->module_equip) / sizeof(int); i++)
 			playerData->module_equip[i] = customPlayerData.ModuleEquip[i];
@@ -58,15 +59,17 @@ namespace DivaHook::Components
 		if (!config.OpenRead())
 			return;
 
-		std::string* customName;
-		std::string* levelName;
+		std::string *customName;
+		std::string *levelName;
 
 		if (config.TryGetValue("player_name", customName))
 			customPlayerData.PlayerName = customName;
+		if (config.TryGetValue("level_name", levelName))
+			customPlayerData.LevelName = levelName;
 
-		auto parseInt = [&](const std::string & key)
+		auto parseInt = [&](const std::string &key)
 		{
-			std::string* stringBuffer;
+			std::string *stringBuffer;
 
 			int result;
 
@@ -79,14 +82,12 @@ namespace DivaHook::Components
 			return result;
 		};
 
+		customPlayerData.LevelNo = parseInt("level");
+		customPlayerData.LevelPlateId = parseInt("level_plate_id");
 		customPlayerData.SkinEquip = parseInt("skin_equip");
 		customPlayerData.BtnSeEquip = parseInt("btn_se_equip");
 		customPlayerData.VocaloidPoint = parseInt("vocaloid_point");
 		customPlayerData.ModuleEquip[0] = parseInt("module_equip[0]");
 		customPlayerData.ModuleEquip[1] = parseInt("module_equip[1]");
-
-		if (config.TryGetValue("level_name", levelName))
-			customPlayerData.LevelName = levelName;
-		customPlayerData.LevelPlateId = parseInt("level_plate_id");
 	}
 }
