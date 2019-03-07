@@ -17,7 +17,7 @@ namespace DivaHook::Components
 	{
 	}
 
-	const char *PlayerDataManager::GetDisplayName()
+	const char* PlayerDataManager::GetDisplayName()
 	{
 		return "player_data_manager";
 	}
