@@ -31,6 +31,8 @@ namespace DivaHook::Components
 
 	void PlayerDataManager::Update()
 	{
+		playerData->level = customPlayerData.LevelNo;
+		playerData->level_plate_id = customPlayerData.LevelPlateId;
 		playerData->skin_equip = customPlayerData.SkinEquip;
 		playerData->btn_se_equip = customPlayerData.BtnSeEquip;
 		playerData->vocaloid_point = customPlayerData.VocaloidPoint;
@@ -40,6 +42,8 @@ namespace DivaHook::Components
 
 		if (customPlayerData.PlayerName != nullptr)
 			playerData->player_name = (char*)customPlayerData.PlayerName->c_str();
+		if (customPlayerData.LevelName != nullptr)
+			playerData->level_name = (char*)customPlayerData.LevelName->c_str();
 
 		//if (Input::Keyboard::GetInstance()->IsTapped(VK_F12))
 		//{
@@ -56,9 +60,12 @@ namespace DivaHook::Components
 			return;
 
 		std::string *customName;
+		std::string *levelName;
 
 		if (config.TryGetValue("player_name", customName))
 			customPlayerData.PlayerName = customName;
+		if (config.TryGetValue("level_name", levelName))
+			customPlayerData.LevelName = levelName;
 
 		auto parseInt = [&](const std::string &key)
 		{
@@ -75,6 +82,8 @@ namespace DivaHook::Components
 			return result;
 		};
 
+		customPlayerData.LevelNo = parseInt("level");
+		customPlayerData.LevelPlateId = parseInt("level_plate_id");
 		customPlayerData.SkinEquip = parseInt("skin_equip");
 		customPlayerData.BtnSeEquip = parseInt("btn_se_equip");
 		customPlayerData.VocaloidPoint = parseInt("vocaloid_point");
