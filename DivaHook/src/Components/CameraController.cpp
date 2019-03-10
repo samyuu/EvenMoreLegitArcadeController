@@ -1,10 +1,14 @@
 #include "CameraController.h"
 #include <algorithm>
+#include "Input/InputState.h"
 #include "../Constants.h"
 #include "../MainModule.h"
 #include "../Input/Mouse.h"
 #include "../Input/Keyboard.h"
 #include "../Input/KeyboardBinding.h"
+
+#define  GLUT_CURSOR_RIGHT_ARROW	0x0000
+#define  GLUT_CURSOR_NONE			0x0065
 
 using namespace DivaHook::Input;
 using namespace DivaHook::Utilities;
@@ -30,9 +34,9 @@ namespace DivaHook::Components
 		delete CounterClockwiseBinding;
 		delete ZoomInBinding;
 		delete ZoomOutBinding;
+
 		delete FastBinding;
 		delete SlowBinding;
-
 	}
 
 	const char* CameraController::GetDisplayName()
@@ -131,18 +135,20 @@ namespace DivaHook::Components
 		if (left ^ right)
 			camera->Position += PointFromAngle(verticalRotation + (right ? +90.0f : -90.0f), speed);
 
-		if(clockwise ^ counterclockwise)
-			camera->Rotation += speed * (clockwise ? -1.0f : +1.0f);
-
-		if(zoomin ^ zoomout)
-			camera->HorizontalFov += speed * (zoomin ? -1.0f : +1.0f);
-
 		if (up ^ down)
 			camera->Position.Y += speed * (up ? +0.25f : -0.25f);
 
-		if (mouse->HasMoved()) // && keyboard->IsDown(MK_LBUTTON))
+		if (clockwise ^ counterclockwise)
+			camera->Rotation += speed * (clockwise ? -1.0f : +1.0f);
+
+		if (zoomin ^ zoomout)
 		{
-			// TODO: hide cursor
+			camera->HorizontalFov += speed * (zoomin ? -1.0f : +1.0f);
+			camera->HorizontalFov = std::clamp(camera->HorizontalFov, +1.0f, +170.0f);
+		}
+
+		if (mouse->HasMoved())
+		{
 			SetMouseWindowCenter();
 
 			auto delta = mouse->GetDeltaPosition();
@@ -152,6 +158,8 @@ namespace DivaHook::Components
 
 			horizontalRotation = std::clamp(horizontalRotation, -75.0f, +75.0f);
 		}
+
+		((InputState*)*(int*)INPUT_STATE_PTR_ADDRESS)->HideCursor();
 
 		Vec2 focus = PointFromAngle(verticalRotation, 1.0f);
 		camera->Focus.X = camera->Position.X + focus.X;
@@ -165,9 +173,15 @@ namespace DivaHook::Components
 		if (GetIsEnabled() == value)
 			return;
 
-		SetIsEnabled(!GetIsEnabled());
+		SetIsEnabled(value);
 
 		printf("CameraController::SetControls(): enabled = %s\n", GetIsEnabled() ? "true" : "false");
+
+		typedef void __stdcall _glutSetCursor(int);
+		auto glutSetCursor = (_glutSetCursor*)GLUT_SET_CURSOR_ADDRESS;
+
+		// hide cursor
+		glutSetCursor(value ? GLUT_CURSOR_NONE : GLUT_CURSOR_RIGHT_ARROW);
 
 		if (value)
 		{

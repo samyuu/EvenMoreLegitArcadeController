@@ -1,12 +1,18 @@
 #pragma once
 #include <functional>
 #include <Windows.h>
-#include "EmulatorComponent.h"
 #include "InputState.h"
-#include "../Input/Binding.h"
+#include "../EmulatorComponent.h"
+#include "../../Input/Binding.h"
 
 namespace DivaHook::Components
 {
+	struct KeyBit
+	{
+		uint32_t Bit;
+		uint8_t KeyCode;
+	};
+
 	class InputEmulator : public EmulatorComponent
 	{
 	public:
@@ -18,10 +24,10 @@ namespace DivaHook::Components
 		Input::Binding* ShikakuBinding;
 		Input::Binding* BatsuBinding;
 		Input::Binding* MaruBinding;
-		
+
 		Input::Binding* LeftBinding;
 		Input::Binding* RightBinding;
-		
+
 		InputEmulator();
 		~InputEmulator();
 
@@ -34,10 +40,36 @@ namespace DivaHook::Components
 		virtual void OnFocusLost() override;
 
 	private:
+		KeyBit keyBits[17] =
+		{
+			{ 5, VK_LEFT },
+			{ 6, VK_RIGHT },
+
+			{ 39, 'A' },
+			{ 55, 'Q' },
+			{ 57, 'S' }, // unsure
+			{ 61, 'W' },
+			{ 63, 'Y' },
+			{ 84, 'L' }, // unsure
+
+			{ 80, VK_RETURN },
+			{ 81, VK_SHIFT },
+			{ 82, VK_CONTROL },
+			{ 83, VK_MENU },
+
+			{ 91, VK_UP },
+			{ 93, VK_DOWN },
+
+			{ 96, MK_LBUTTON },
+			{ 97, VK_MBUTTON },
+			{ 98, MK_RBUTTON },
+		};
+
 		InputState* inputState;
 
 		InputState* GetInputStatePtr(void *address);
 		JvsButtons GetJvsButtonsState(bool(*buttonTestFunc)(void*));
+		char GetKeyState();
 
 		void UpdateInputBit(uint32_t bit, uint8_t keycode);
 	};

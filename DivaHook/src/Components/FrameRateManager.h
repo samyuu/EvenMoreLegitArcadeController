@@ -15,9 +15,21 @@ namespace DivaHook::Components
 		virtual void Update() override;
 
 	private:
+		float *pvFrameRate;
 		float *frameSpeed;
 		float *aetFrameDuration;
 		float defaultAetFrameDuration;
+	
+		float commonRefreshRates[5]
+		{
+			60.0f,
+			75.0f,
+			120.0f,
+			144.0f,
+			240.0f,
+		};
+
+		float RoundFrameRate(float frameRate);
 	};
 }
 

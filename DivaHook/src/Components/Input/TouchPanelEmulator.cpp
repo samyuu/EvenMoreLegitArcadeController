@@ -1,8 +1,8 @@
 #include "TouchPanelEmulator.h"
 #include <iostream>
-#include "../Constants.h"
-#include "../Input/Mouse.h"
-#include "../Input/Keyboard.h"
+#include "../../Constants.h"
+#include "../../Input/Mouse.h"
+#include "../../Input/Keyboard.h"
 
 using namespace DivaHook::Input;
 
@@ -33,7 +33,6 @@ namespace DivaHook::Components
 
 	void TouchPanelEmulator::UpdateInput()
 	{
-		// TODO: rescale TouchReaction aet position
 		auto keyboard = Keyboard::GetInstance();
 		auto pos = Mouse::GetInstance()->GetRelativePosition();
 

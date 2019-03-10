@@ -3,50 +3,77 @@
 // 2013-08-30T 14:41:15+09:00
 # file:			patch.txt
 # author:		samyuu
-# version:		3.10.00
-# date:			2019/03/05
-# image_base:	0x00400C00
+# version:		4.00.00
+# date:			2019/03/10
+# image_base:   0x00400C00
 
-// Address : Length : Original bytes																		: Patched bytes
-// Jump past JVS PollInput function so we can write our own input
-0x00455438 : 0x0001 : 74																					: EB 
+// Address : Length : Original bytes                    : Patched bytes
+
+// --- Boot Requirements: ---
+
 // NOP out JVS board error JMP
-0x004592CC : 0x0002 : 74 E5																					: 90 90 
-// Use GLUT_CURSOR_RIGHT_ARROW instead of GLUT_CURSOR_NONE
-0x00459CD4 : 0x0001 : 65                                                                                    : 00 
+0x004592CC : 0x0002 : 74 E5                             : 90 90 
+
 // NOP out sys_am sram/eprom initialization call 
-0x0045AF5A : 0x0005 : E8 B1 56 06 00																		: 90 90 90 90 90 
+0x0045AF5A : 0x0005 : E8 B1 56 06 00                    : 90 90 90 90 90 
+
 // Return early to prevent null reference for some sys_am object
-0x004BF730 : 0x0006 : 56 8B F1 8B 0E 8B																		: B8 00 00 00 00 C3 
-// Ignore CLOSE SETTINGS check
-0x004E4550 : 0x0006 : 51 56 8B 74 24 0C																		: B8 01 00 00 00 C3 
-// Always return true for the SelCredit enter SelPv check
-0x0060C3E0 : 0x0003 : 53 32 DB																				: B0 01 C3 
+0x004BF730 : 0x0006 : 56 8B F1 8B 0E 8B                 : B8 00 00 00 00 C3 
+
 // Skip the sys_am eprom time bomb checks
-0x00650A33 : 0x0005 : E8 D8 8E E7 FF																		: EB 5C 90 90 90 
+0x00650A33 : 0x0005 : E8 D8 8E E7 FF                    : EB 5C 90 90 90 
+
 // Jump past the Wrong Resolution Setting error
-0x006521F3 : 0x0001 : 74																					: EB 
+0x006521F3 : 0x0001 : 74                                : EB 
+
 // Always skip the SYSTEM_STARTUP_ERROR game state
-0x00652394 : 0x0002 : 8A C3																					: B0 01 
-// Ignore the EngineClear variable to clear the framebuffer at all resolutions
-0x0071708E : 0x0002 : 74 0C                                                                                 : 90 90 
-0x0071717D : 0x0001 : 75                                                                                    : EB 
-// Jump past the VP SelWatch button enabled checks
-0x00798108 : 0x0005 : E8 F3 01 E7 FF                                                                        : EB 2D 90 90 90 
-// Return early before resetting to the default PlayerData so we don't need to keep updating the PlayerData struct
-0x006DD720 : 0x0001 : 56																					: C3 
+0x00652394 : 0x0002 : 8A C3                             : B0 01 
+
 // *But of course we have a valid keychip*, return true
-0x007FCF40 : 0x0003 : A0 F2 6B																				: B0 01 C3 
+0x007FCF40 : 0x0003 : A0 F2 6B                          : B0 01 C3 
+
 // Jump past the initial amMaster initialization
-0x0080384A : 0x0004 : E8 91 C6 1E																			: E9 96 00 00 
+0x0080384A : 0x0004 : E8 91 C6 1E                       : E9 96 00 00 
+
 // Move SYSTEM_OK into edx
-0x00808041 : 0x0003 : E8 0A 54																				: BA FF FF 
-// Move edx into the LocationServerStatus variable and NOP out the router timeout initialization logic
-0x00808046 : 0x001C : 84 C0 74 18 69 FF 58 02 00 00 C7 05 98 6E 08 01 10 0E 00 00 89 3D C8 6E 08 01 EB 16	: 89 15 B0 6E 08 01 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 
+0x00808041 : 0x0003 : E8 0A 54                          : BA FF FF 
+
+// Move edx into the LocationServerStatus variable and jump past the router timeout initialization
+0x00808046 : 0x000A : 84 C0 74 18 69 FF 58 02 00 00     : 89 15 B0 6E 08 01 EB 14 90 90 
+
 // Let the router checks time out so we can skip the error
-0x00808171 : 0x0002 : 7F 02																					: 90 90 
+0x00808171 : 0x0002 : 7F 02                             : 90 90 
+
 // Then immediately move on to the DHCP 3 initialization phase
-0x008081FF : 0x0007 : 75 34 8B 06 8B 50 30																	: E9 43 01 00 00 90 90 
-0x008082EC : 0x0001 : A4																					: 5A 
+0x008081FF : 0x0007 : 75 34 8B 06 8B 50 30              : E9 43 01 00 00 90 90 
+0x008082EC : 0x0001 : A4                                : 5A 
+
 // Avoid JVS related null reference
-0x00830E45 : 0x0005 : E8 E6 E8 C8 FF																		: 90 90 90 90 90 
+0x00830E45 : 0x0005 : E8 E6 E8 C8 FF                    : 90 90 90 90 90 
+
+// --- Optional: ---
+
+// Jump past the PollInput function so we can write our own input
+0x00455438 : 0x0001 : 74                                : EB 
+
+// Set the full screen glutGameModeString refresh rate to its default value
+0x00459CAA : 0x0001 : 3C                                : 00
+
+// Use GLUT_CURSOR_RIGHT_ARROW instead of GLUT_CURSOR_NONE
+0x00459CD4 : 0x0001 : 65                                : 00 
+
+// Ignore CLOSE SETTINGS check
+0x004E4550 : 0x0006 : 51 56 8B 74 24 0C                 : B8 01 00 00 00 C3 
+
+// Always return true for the SelCredit enter SelPv check
+0x0060C3E0 : 0x0003 : 53 32 DB                          : B0 01 C3 
+
+// Return early before resetting to the default PlayerData so we don't need to keep updating the PlayerData struct
+0x006DD720 : 0x0001 : 56                                : C3 
+
+// Ignore the EngineClear variable to clear the framebuffer at all resolutions
+0x0071708E : 0x0002 : 74 0C                             : 90 90 
+0x0071717D : 0x0001 : 75                                : EB 
+
+// Jump past the VP SelWatch button enabled checks
+0x00798108 : 0x0005 : E8 F3 01 E7 FF                    : EB 2D 90 90 90 

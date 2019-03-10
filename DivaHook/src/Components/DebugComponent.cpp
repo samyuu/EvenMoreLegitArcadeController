@@ -1,7 +1,7 @@
 #include "DebugComponent.h"
 #include <iostream>
 #include <Windows.h>
-#include "InputState.h"
+#include "Input/InputState.h"
 #include "GameState.h"
 #include "PlayerData.h"
 #include "../Input/Keyboard.h"
@@ -47,5 +47,9 @@ namespace DivaHook::Components
 		if (keyboard->IsTapped(VK_F6)) changeBaseState(GS_DATA_TEST);
 		if (keyboard->IsTapped(VK_F7)) changeBaseState(GS_TEST_MODE);
 		if (keyboard->IsTapped(VK_F8)) changeBaseState(GS_APP_ERROR);
+
+		// fast forward menus by 4x
+		if (keyboard->IsDown(VK_SHIFT) && keyboard->IsDown(VK_TAB))
+			*(float*)AET_FRAME_DURATION_ADDRESS = 1.0f / (GetGameFrameRate() / 4.0f);
 	}
 }

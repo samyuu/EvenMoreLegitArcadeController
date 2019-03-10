@@ -20,6 +20,7 @@ namespace DivaHook::Components
 		void SetElapsedTime(float value);
 		float GetElapsedTime();
 		float GetFrameRate();
+		float GetGameFrameRate();
 
 	private:
 		float elapsedTime;

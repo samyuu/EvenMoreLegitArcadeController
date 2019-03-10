@@ -15,6 +15,7 @@ namespace DivaHook::Components
 
 	PlayerDataManager::~PlayerDataManager()
 	{
+		delete customPlayerData;
 	}
 
 	const char* PlayerDataManager::GetDisplayName()
@@ -31,25 +32,42 @@ namespace DivaHook::Components
 
 	void PlayerDataManager::Update()
 	{
-		playerData->level = customPlayerData.LevelNo;
-		playerData->level_plate_id = customPlayerData.LevelPlateId;
-		playerData->skin_equip = customPlayerData.SkinEquip;
-		playerData->btn_se_equip = customPlayerData.BtnSeEquip;
-		playerData->vocaloid_point = customPlayerData.VocaloidPoint;
+		if (playerData == nullptr)
+			return;
+
+		// don't need to overwrite the default values
+		auto setIfNotEqual = [](int *target, int value, int comparison) 
+		{
+			if (value != comparison)
+				*target = value;
+		};
+
+		setIfNotEqual(&playerData->level, customPlayerData->Level, 1);
+		setIfNotEqual(&playerData->level_plate_id, customPlayerData->LevelPlateId, 0);
+		setIfNotEqual(&playerData->vocaloid_point, customPlayerData->VocaloidPoint, 0);
+		setIfNotEqual(&playerData->skin_equip, customPlayerData->SkinEquip, 0);
+		setIfNotEqual(&playerData->btn_se_equip, customPlayerData->BtnSeEquip, -1);
 
 		for (int i = 0; i < sizeof(playerData->module_equip) / sizeof(int); i++)
-			playerData->module_equip[i] = customPlayerData.ModuleEquip[i];
+			setIfNotEqual(&playerData->module_equip[i], customPlayerData->ModuleEquip[i], 0);
 
-		if (customPlayerData.PlayerName != nullptr)
-			playerData->player_name = (char*)customPlayerData.PlayerName->c_str();
-		if (customPlayerData.LevelName != nullptr)
-			playerData->level_name = (char*)customPlayerData.LevelName->c_str();
+		if (customPlayerData->PlayerName != nullptr)
+		{
+			playerData->field_D8 = 0x10;
+			playerData->player_name = (char*)customPlayerData->PlayerName->c_str();
+		}
 
-		//if (Input::Keyboard::GetInstance()->IsTapped(VK_F12))
-		//{
-		//	printf("PlayerDataManager::Update(): Loading config...\n");
-		//	LoadConfig();
-		//}
+		if (customPlayerData->LevelName != nullptr)
+		{
+			playerData->field_F4 = 0x10;
+			playerData->level_name = (char*)customPlayerData->LevelName->c_str();
+		}
+
+		if (false && Input::Keyboard::GetInstance()->IsTapped(VK_F12))
+		{
+			printf("PlayerDataManager::Update(): Loading config...\n");
+			LoadConfig();
+		}
 	}
 
 	void PlayerDataManager::LoadConfig()
@@ -59,19 +77,16 @@ namespace DivaHook::Components
 		if (!config.OpenRead())
 			return;
 
-		std::string *customName;
-		std::string *levelName;
+		if (customPlayerData != nullptr)
+			delete customPlayerData;
 
-		if (config.TryGetValue("player_name", customName))
-			customPlayerData.PlayerName = customName;
-		if (config.TryGetValue("level_name", levelName))
-			customPlayerData.LevelName = levelName;
+		customPlayerData = new CustomPlayerData();
 
 		auto parseInt = [&](const std::string &key)
 		{
 			std::string *stringBuffer;
 
-			int result;
+			int result = 0;
 
 			if (config.TryGetValue(key, stringBuffer))
 			{
@@ -82,12 +97,15 @@ namespace DivaHook::Components
 			return result;
 		};
 
-		customPlayerData.LevelNo = parseInt("level");
-		customPlayerData.LevelPlateId = parseInt("level_plate_id");
-		customPlayerData.SkinEquip = parseInt("skin_equip");
-		customPlayerData.BtnSeEquip = parseInt("btn_se_equip");
-		customPlayerData.VocaloidPoint = parseInt("vocaloid_point");
-		customPlayerData.ModuleEquip[0] = parseInt("module_equip[0]");
-		customPlayerData.ModuleEquip[1] = parseInt("module_equip[1]");
+		config.TryGetValue("player_name", customPlayerData->PlayerName);
+		config.TryGetValue("level_name", customPlayerData->LevelName);
+
+		customPlayerData->Level = parseInt("level");
+		customPlayerData->LevelPlateId = parseInt("level_plate_id");
+		customPlayerData->VocaloidPoint = parseInt("vocaloid_point");
+		customPlayerData->ModuleEquip[0] = parseInt("module_equip[0]");
+		customPlayerData->ModuleEquip[1] = parseInt("module_equip[1]");
+		customPlayerData->SkinEquip = parseInt("skin_equip");
+		customPlayerData->BtnSeEquip = parseInt("btn_se_equip");
 	}
 }

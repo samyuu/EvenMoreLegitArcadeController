@@ -1,16 +1,16 @@
 #include <iostream>
 #include "windows.h"
 #include "InputEmulator.h"
-#include "../Constants.h"
-#include "../MainModule.h"
-#include "../Input/Mouse.h"
-#include "../Input/Keyboard.h"
-#include "../Input/KeyboardBinding.h"
-#include "../Input/Binding.h"
-#include "../Input/KeyConfig/Config.h"
-#include "../Utilities/Operations.h"
-#include "../Utilities/EnumBitwiseOperations.h"
-#include "../FileSystem/ConfigFile.h"
+#include "../../Constants.h"
+#include "../../MainModule.h"
+#include "../../Input/Mouse.h"
+#include "../../Input/Keyboard.h"
+#include "../../Input/KeyboardBinding.h"
+#include "../../Input/Binding.h"
+#include "../../Input/KeyConfig/Config.h"
+#include "../../Utilities/Operations.h"
+#include "../../Utilities/EnumBitwiseOperations.h"
+#include "../../FileSystem/ConfigFile.h"
 
 const std::string KEY_CONFIG_FILE_NAME = "keyconfig.ini";
 
@@ -85,6 +85,7 @@ namespace DivaHook::Components
 	{
 		// to prevent buttons from being "stuck"
 		inputState->ClearState();
+		inputState->HideCursor();
 	}
 
 	void InputEmulator::UpdateInput()
@@ -98,10 +99,12 @@ namespace DivaHook::Components
 		inputState->Released.Buttons = GetJvsButtonsState(releasedFunc);
 		inputState->Down.Buttons = GetJvsButtonsState(downFunc);
 		inputState->DoubleTapped.Buttons = GetJvsButtonsState(doubleTapFunc);
+		inputState->IntervalTapped.Buttons = GetJvsButtonsState(tappedFunc);
 
 		// repress held down buttons to not block input
 		inputState->Down.Buttons ^= inputState->Tapped.Buttons;
 
+		auto keyboard = Keyboard::GetInstance();
 		auto mouse = Mouse::GetInstance();
 
 		auto pos = mouse->GetRelativePosition();
@@ -112,23 +115,10 @@ namespace DivaHook::Components
 		inputState->MouseDeltaX = (int)deltaPos.x;
 		inputState->MouseDeltaY = (int)deltaPos.y;
 
-		UpdateInputBit(5, VK_LEFT);
-		UpdateInputBit(6, VK_RIGHT);
+		inputState->Key = GetKeyState();
 
-		UpdateInputBit(39, 'A');
-		UpdateInputBit(55, 'Q');
-		UpdateInputBit(57, 'S'); // unsure
-		UpdateInputBit(61, 'W');
-		UpdateInputBit(63, 'Y');
-		UpdateInputBit(84, 'L'); // unsure
-
-		UpdateInputBit(80, VK_RETURN);
-		UpdateInputBit(91, VK_UP);
-		UpdateInputBit(93, VK_DOWN);
-
-		UpdateInputBit(96, MK_LBUTTON);
-		UpdateInputBit(97, VK_MBUTTON);
-		UpdateInputBit(98, MK_RBUTTON);
+		for (int i = 0; i < sizeof(keyBits) / sizeof(KeyBit); i++)
+			UpdateInputBit(keyBits[i].Bit, keyBits[i].KeyCode);
 	}
 
 	InputState* InputEmulator::GetInputStatePtr(void *address)
@@ -165,6 +155,33 @@ namespace DivaHook::Components
 		return buttons;
 	}
 
+	char InputEmulator::GetKeyState()
+	{
+		auto keyboard = Keyboard::GetInstance();
+
+		bool upper = keyboard->IsDown(VK_SHIFT);
+		const char caseDifference = 'A' - 'a';
+
+		char inputKey = 0x00;
+
+		for (char key = '0'; key < 'Z'; key++)
+		{
+			if (keyboard->IsTapped(key))
+				inputKey = (upper || key < 'A') ? key : (key - caseDifference);
+		}
+
+		if (keyboard->IsTapped(VK_BACK)) 
+			inputKey = 0x08;
+
+		if (keyboard->IsTapped(VK_TAB)) 
+			inputKey = 0x09;
+
+		if (keyboard->IsTapped(VK_SPACE))
+			inputKey = 0x20;
+
+		return inputKey;
+	}
+
 	void InputEmulator::UpdateInputBit(uint32_t bit, uint8_t keycode)
 	{
 		auto keyboard = Keyboard::GetInstance();
@@ -173,5 +190,6 @@ namespace DivaHook::Components
 		inputState->SetBit(bit, keyboard->IsReleased(keycode), INPUT_RELEASED);
 		inputState->SetBit(bit, keyboard->IsDown(keycode), INPUT_DOWN);
 		inputState->SetBit(bit, keyboard->IsDoubleTapped(keycode), INPUT_DOUBLE_TAPPED);
+		inputState->SetBit(bit, keyboard->IsTapped(keycode), INPUT_INTERVAL_TAPPED);
 	}
 }

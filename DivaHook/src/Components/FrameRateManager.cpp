@@ -1,5 +1,6 @@
 #include "FrameRateManager.h"
 #include "../Constants.h"
+#include "GameState.h"
 #include <stdio.h>
 #include <windows.h>
 
@@ -20,6 +21,7 @@ namespace DivaHook::Components
 
 	void FrameRateManager::Initialize()
 	{
+		pvFrameRate = (float*)PV_FRAME_RATE_ADDRESS;
 		frameSpeed = (float*)FRAME_SPEED_ADDRESS;
 		aetFrameDuration = (float*)AET_FRAME_DURATION_ADDRESS;
 
@@ -33,28 +35,50 @@ namespace DivaHook::Components
 
 	void FrameRateManager::Update()
 	{
-		float frameRate = GetFrameRate();
+		float frameRate = RoundFrameRate(GetGameFrameRate());
 
-		float commonRefreshRates[]
+		*aetFrameDuration = 1.0f / frameRate;
+		*pvFrameRate = frameRate;
+
+		bool inGame = *(GameState*)CURRENT_GAME_STATE_ADDRESS == GS_GAME;
+
+		if (inGame)
 		{
-			60.0f,
-			75.0f,
-			120.0f,
-			144.0f,
-			240.0f,
-		};
+			// During the GAME state the frame rate will be handled by the PvFrameRate instead
+			
+			constexpr float defaultFrameSpeed = 1.0f;
+			constexpr float defaultFrameRate = 60.0f;
 
-		const float threshold = 4.0f;
+			// This PV struct creates a copy of the PvFrameRate & PvFrameSpeed during the loading screen
+			// so we'll make sure to keep updating it as well.
+			// Each new motion also creates its own copy of these values but keeping track of the active motions is annoying
+			// and they usually change multiple times per PV anyway so this should suffice for now
+			float* pvStructPvFrameRate	= (float*)(0x0108D3D8 + 0x1D8A4);
+			float* pvStructPvFrameSpeed = (float*)(0x0108D3D8 + 0x1D8A8);
+
+			*pvStructPvFrameRate  = *pvFrameRate;
+			*pvStructPvFrameSpeed = (defaultFrameRate / *pvFrameRate);
+
+			*frameSpeed = defaultFrameSpeed;
+		}
+		else
+		{
+			*frameSpeed = *aetFrameDuration / defaultAetFrameDuration;
+		}
+	}
+
+	float FrameRateManager::RoundFrameRate(float frameRate)
+	{
+		constexpr float roundingThreshold = 4.0f;
 
 		for (int i = 0; i < sizeof(commonRefreshRates) / sizeof(float); i++)
 		{
 			float refreshRate = commonRefreshRates[i];
 
-			if (frameRate > refreshRate - threshold && frameRate < refreshRate + threshold)
+			if (frameRate > refreshRate - roundingThreshold && frameRate < refreshRate + roundingThreshold)
 				frameRate = refreshRate;
 		}
 
-		*aetFrameDuration = 1.0f / frameRate;
-		*frameSpeed = *aetFrameDuration / defaultAetFrameDuration;
+		return frameRate;
 	}
 }

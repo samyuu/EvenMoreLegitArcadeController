@@ -1,4 +1,5 @@
 #include "EmulatorComponent.h"
+#include "../Constants.h"
 
 namespace DivaHook::Components
 {
@@ -23,5 +24,10 @@ namespace DivaHook::Components
 	float EmulatorComponent::GetFrameRate()
 	{
 		return 1000.0f / GetElapsedTime();
+	}
+
+	float EmulatorComponent::GetGameFrameRate()
+	{
+		return *(float*)FRAME_RATE_ADDRESS;
 	}
 }

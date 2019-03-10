@@ -8,5 +8,6 @@ namespace DivaHook::Components
 		INPUT_RELEASED,
 		INPUT_DOWN,
 		INPUT_DOUBLE_TAPPED,
+		INPUT_INTERVAL_TAPPED,
 	};
 }

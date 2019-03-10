@@ -92,6 +92,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\CustomPlayerData.h" />
     <ClInclude Include="src\Components\Camera.h" />
     <ClInclude Include="src\Components\CameraController.h" />
     <ClInclude Include="src\Components\FrameRateManager.h" />
@@ -99,7 +100,7 @@
     <ClInclude Include="src\FileSystem\ConfigFile.h" />
     <ClInclude Include="src\Components\DebugComponent.h" />
     <ClInclude Include="src\Components\GameState.h" />
-    <ClInclude Include="src\Components\InputBufferType.h" />
+    <ClInclude Include="src\Components\Input\InputBufferType.h" />
     <ClInclude Include="src\Constants.h" />
     <ClInclude Include="src\Input\MouseState.h" />
     <ClInclude Include="src\Input\Mouse.h" />
@@ -113,9 +114,9 @@
     <ClInclude Include="src\Components\EmulatorComponent.h" />
     <ClInclude Include="src\Utilities\EnumBitwiseOperations.h" />
     <ClInclude Include="src\Input\IInputDevice.h" />
-    <ClInclude Include="src\Components\JvsButtons.h" />
-    <ClInclude Include="src\Components\InputEmulator.h" />
-    <ClInclude Include="src\Components\InputState.h" />
+    <ClInclude Include="src\Components\Input\JvsButtons.h" />
+    <ClInclude Include="src\Components\Input\InputEmulator.h" />
+    <ClInclude Include="src\Components\Input\InputState.h" />
     <ClInclude Include="src\Input\Keyboard.h" />
     <ClInclude Include="src\Input\KeyboardState.h" />
     <ClInclude Include="src\Utilities\Math.h" />
@@ -124,12 +125,13 @@
     <ClInclude Include="src\Utilities\Stopwatch.h" />
     <ClInclude Include="src\Utilities\Vec2.h" />
     <ClInclude Include="src\Utilities\Vec3.h" />
-    <ClInclude Include="targetver.h" />
-    <ClInclude Include="src\Components\TouchPanelEmulator.h" />
-    <ClInclude Include="src\Components\TouchPanelState.h" />
+    <ClInclude Include="src\targetver.h" />
+    <ClInclude Include="src\Components\Input\TouchPanelEmulator.h" />
+    <ClInclude Include="src\Components\Input\TouchPanelState.h" />
     <ClInclude Include="src\FileSystem\TextFile.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\CustomPlayerData.cpp" />
     <ClCompile Include="src\Components\CameraController.cpp" />
     <ClCompile Include="src\Components\FrameRateManager.cpp" />
     <ClCompile Include="src\Components\PlayerDataManager.cpp" />
@@ -147,14 +149,14 @@
     <ClCompile Include="src\Input\IInputBinding.cpp" />
     <ClCompile Include="src\dllmain.cpp" />
     <ClCompile Include="src\Components\EmulatorComponent.cpp" />
-    <ClCompile Include="src\Components\InputEmulator.cpp" />
-    <ClCompile Include="src\Components\InputState.cpp" />
+    <ClCompile Include="src\Components\Input\InputEmulator.cpp" />
+    <ClCompile Include="src\Components\Input\InputState.cpp" />
     <ClCompile Include="src\Input\Keyboard.cpp" />
     <ClCompile Include="src\Input\KeyboardState.cpp" />
-    <ClCompile Include="src\Components\TouchPanelEmulator.cpp" />
+    <ClCompile Include="src\Components\Input\TouchPanelEmulator.cpp" />
     <ClCompile Include="src\Utilities\Math.cpp" />
     <ClCompile Include="src\Utilities\Operations.cpp" />
-    <ClCompile Include="src\Components\TouchPanelState.cpp" />
+    <ClCompile Include="src\Components\Input\TouchPanelState.cpp" />
     <ClCompile Include="src\Components\SysTimer.cpp" />
     <ClCompile Include="src\Utilities\Stopwatch.cpp" />
     <ClCompile Include="src\FileSystem\TextFile.cpp" />

@@ -1,5 +1,5 @@
 #pragma once
-#include "EmulatorComponent.h"
+#include "../EmulatorComponent.h"
 #include "TouchPanelState.h"
 
 namespace DivaHook::Components

@@ -25,14 +25,22 @@ namespace DivaHook::Components
 		uint32_t Padding_20[4];
 
 		ButtonState DoubleTapped;
-		uint32_t Padding_30[20];
+		uint32_t Padding_30[4];
 		
+		ButtonState IntervalTapped;
+		uint32_t Padding_38[12];
+
 		int32_t MouseX;
 		int32_t MouseY;
 		int32_t MouseDeltaX;
 		int32_t MouseDeltaY;
 
+		uint32_t Padding_AC[8];
+		uint8_t Padding_D0[3];
+		char Key;
+
 		void ClearState();
+		void HideCursor();
 		void SetBit(uint32_t bit, bool value, InputBufferType inputType);
 		uint8_t* GetInputBuffer(InputBufferType inputType);
 	};
