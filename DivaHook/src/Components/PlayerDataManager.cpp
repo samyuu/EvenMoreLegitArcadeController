@@ -47,7 +47,6 @@ namespace DivaHook::Components
 		// setIfNotEqual(&playerData->vocaloid_point, customPlayerData->VocaloidPoint, 0);
 		setIfNotEqual(&playerData->skin_equip, customPlayerData->SkinEquip, 0);
 		setIfNotEqual(&playerData->btn_se_equip, customPlayerData->BtnSeEquip, -1);
-		setIfNotEqual(&playerData->pv_sort_kind, customPlayerData->PvSortKind, 2);
 
 		for (int i = 0; i < sizeof(playerData->module_equip) / sizeof(int); i++)
 			setIfNotEqual(&playerData->module_equip[i], customPlayerData->ModuleEquip[i], 0);
@@ -108,7 +107,6 @@ namespace DivaHook::Components
 		customPlayerData->ModuleEquip[1] = parseInt("module_equip[1]");
 		customPlayerData->SkinEquip = parseInt("skin_equip");
 		customPlayerData->BtnSeEquip = parseInt("btn_se_equip");
-		customPlayerData->PvSortKind = parseInt("pv_sort_kind");
 
 		// These values should not be overwritten
 		// And also can be saved and loaded if implemented
@@ -116,13 +114,5 @@ namespace DivaHook::Components
 		playerData->act_vol = parseInt("act_vol");
 		playerData->act_toggle = parseInt("act_toggle");
 		playerData->vocaloid_point = parseInt("vocaloid_point");
-
-		// More fun can be achieved with these optional values
-		playerData->use_card = parseInt("use_card");
-		playerData->freeplay = parseInt("freeplay");
-		playerData->use_pv_module_equip = parseInt("use_pv_module_equip");
-		playerData->ch_pv_module_equip = parseInt("ch_pv_module_equip");
-		playerData->use_pv_skin_equip = parseInt("use_pv_skin_equip");
-		playerData->use_pv_btn_se_equip = parseInt("use_pv_btn_se_equip");
 	}
 }

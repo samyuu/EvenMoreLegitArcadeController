@@ -15,7 +15,6 @@ namespace DivaHook::Components
 		int VocaloidPoint;
 		int SkinEquip;
 		int BtnSeEquip;
-		int PvSortKind;
 		int ModuleEquip[2];
 	};
 }

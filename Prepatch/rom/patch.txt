@@ -3,7 +3,7 @@
 // 2013-08-30T 14:41:15+09:00
 # file:			patch.txt
 # author:		samyuu
-# version:		4.00.01
+# version:		4.00.00
 # date:			2019/03/10
 # image_base:   0x00400C00
 
@@ -77,11 +77,3 @@
 
 // Jump past the VP SelWatch button enabled checks
 0x00798108 : 0x0005 : E8 F3 01 E7 FF                    : EB 2D 90 90 90 
-
-// Disable jittering Temporal AA thingy (by @lybxlpsv)
-0x002E76D0 : 0x0004 : 8B 44 24 04                       : 29 C0 90 90
-
-// For debug purposes
-// 0x0045AD12 : 0x0001 : 02								: 00 
-// 0x0059F150 : 0x0002 : 32 C0								: B0 01 
-// 0x0059F160 : 0x0002 : 32 C0								: B0 01 
