@@ -96,6 +96,7 @@
     <ClInclude Include="src\Components\Camera.h" />
     <ClInclude Include="src\Components\CameraController.h" />
     <ClInclude Include="src\Components\FrameRateManager.h" />
+    <ClInclude Include="src\Components\ScaleComponent.h" />
     <ClInclude Include="src\Components\PlayerDataManager.h" />
     <ClInclude Include="src\FileSystem\ConfigFile.h" />
     <ClInclude Include="src\Components\DebugComponent.h" />
@@ -134,6 +135,7 @@
     <ClCompile Include="src\Components\CustomPlayerData.cpp" />
     <ClCompile Include="src\Components\CameraController.cpp" />
     <ClCompile Include="src\Components\FrameRateManager.cpp" />
+    <ClCompile Include="src\Components\ScaleComponent.cpp" />
     <ClCompile Include="src\Components\PlayerDataManager.cpp" />
     <ClCompile Include="src\FileSystem\ConfigFile.cpp" />
     <ClCompile Include="src\Components\DebugComponent.cpp" />

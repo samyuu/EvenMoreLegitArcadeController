@@ -21,6 +21,11 @@ namespace DivaHook::Input
 		MouseState lastState;
 		MouseState currentState;
 
+		int* gameWidth;
+		int* gameHeight;
+		float xoffset;
+		float scale;
+
 		static Mouse* instance;
 	};
 }
