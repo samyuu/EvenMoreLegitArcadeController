@@ -65,21 +65,23 @@ namespace DivaHook::Input
 
 		gameHeight = (int*)RESOLUTION_HEIGHT_ADDRESS;
 		gameWidth = (int*)RESOLUTION_WIDTH_ADDRESS;
-
-		xoffset = ((float)16 / (float)9) * (hWindow.bottom - hWindow.top);
-		if (xoffset != (hWindow.right - hWindow.left))
-		{
-			scale = xoffset / (hWindow.right - hWindow.left);
-			xoffset = ((hWindow.right - hWindow.left) / 2) - (xoffset / 2);
-			
-		}
-		else {
-			xoffset = 0;
-			scale = 1;
-		}
+		fbWidth = (int*)FB1_WIDTH_ADDRESS;
+		fbHeight = (int*)FB1_HEIGHT_ADDRESS;
 		
-		currentState.RelativePosition.x = ((currentState.RelativePosition.x - round(xoffset)) * *gameWidth / (hWindow.right - hWindow.left)) / scale;
-		currentState.RelativePosition.y = currentState.RelativePosition.y * *gameHeight / (hWindow.bottom - hWindow.top);
+		if ((fbWidth != gameWidth) && (fbHeight != gameHeight)) {
+			xoffset = ((float)16 / (float)9) * (hWindow.bottom - hWindow.top);
+			if (xoffset != (hWindow.right - hWindow.left))
+			{
+				scale = xoffset / (hWindow.right - hWindow.left);
+				xoffset = ((hWindow.right - hWindow.left) / 2) - (xoffset / 2);
+			}
+			else {
+				xoffset = 0;
+				scale = 1;
+			}
 
+			currentState.RelativePosition.x = ((currentState.RelativePosition.x - round(xoffset)) * *gameWidth / (hWindow.right - hWindow.left)) / scale;
+			currentState.RelativePosition.y = currentState.RelativePosition.y * *gameHeight / (hWindow.bottom - hWindow.top);
+		}
 	}
 }

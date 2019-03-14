@@ -23,6 +23,9 @@ namespace DivaHook::Input
 
 		int* gameWidth;
 		int* gameHeight;
+		int* fbWidth;
+		int* fbHeight;
+
 		float xoffset;
 		float scale;
 
