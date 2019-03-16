@@ -39,10 +39,10 @@ namespace DivaHook::Components
 		state->XPosition = (float)pos.x;
 		state->YPosition = (float)pos.y;
 
-		bool tapped = keyboard->IsTapped(VK_LBUTTON);
+		bool touching = keyboard->IsDown(VK_LBUTTON);
 		bool released = keyboard->IsReleased(VK_LBUTTON);
 
-		state->ContactType = (tapped ? 0x2 : released ? 0x1 : 0x0);
+		state->ContactType = (touching ? 0x2 : released ? 0x1 : 0x0);
 		state->Pressure = (float)(state->ContactType != 0);
 	}
 
