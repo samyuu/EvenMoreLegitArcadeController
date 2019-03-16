@@ -32,4 +32,3 @@ namespace DivaHook::Components
 		float RoundFrameRate(float frameRate);
 	};
 }
-

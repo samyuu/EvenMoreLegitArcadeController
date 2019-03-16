@@ -37,10 +37,10 @@ namespace DivaHook::Components
 		auto keyboard = Input::Keyboard::GetInstance();
 
 		typedef void ChangeGameState(GameState);
-		ChangeGameState* changeBaseState = (ChangeGameState*)0x0045C100;
+		ChangeGameState* changeBaseState = (ChangeGameState*)CHANGE_MODE_ADDRESS;
 
 		typedef void ChangeLogGameState(GameState, SubGameState);
-		ChangeLogGameState* changeSubState = (ChangeLogGameState*)0x0045C290;
+		ChangeLogGameState* changeSubState = (ChangeLogGameState*)CHANGE_SUB_MODE_ADDRESS;
 
 		if (keyboard->IsTapped(VK_F4)) changeBaseState(GS_ADVERTISE);
 		if (keyboard->IsTapped(VK_F5)) changeBaseState(GS_GAME);

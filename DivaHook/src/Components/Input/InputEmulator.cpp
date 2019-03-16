@@ -49,6 +49,7 @@ namespace DivaHook::Components
 	void InputEmulator::Initialize()
 	{
 		inputState = GetInputStatePtr((void*)INPUT_STATE_PTR_ADDRESS);
+		inputState->HideCursor();
 
 		TestBinding = new Binding();
 		ServiceBinding = new Binding();
@@ -123,7 +124,7 @@ namespace DivaHook::Components
 
 	InputState* InputEmulator::GetInputStatePtr(void *address)
 	{
-		return (InputState*)(*(int*)address);
+		return (InputState*)(*(uint32_t*)address);
 	}
 
 	JvsButtons InputEmulator::GetJvsButtonsState(bool(*buttonTestFunc)(void*))

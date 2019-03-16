@@ -40,12 +40,15 @@ namespace DivaHook::Components
 		virtual void OnFocusLost() override;
 
 	private:
-		KeyBit keyBits[17] =
+		KeyBit keyBits[20] =
 		{
 			{ 5, VK_LEFT },
 			{ 6, VK_RIGHT },
 
+			{ 29, VK_SPACE },
 			{ 39, 'A' },
+			{ 43, 'E' },
+			{ 42, 'D' },
 			{ 55, 'Q' },
 			{ 57, 'S' }, // unsure
 			{ 61, 'W' },
