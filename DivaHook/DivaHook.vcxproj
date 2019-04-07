@@ -15,7 +15,7 @@
     <ProjectGuid>{69BCF67B-34D9-4424-A2A8-3A056E9D38A6}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>DivaHook</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -69,6 +69,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>dinput8.lib;dxguid.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -89,9 +90,12 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>dinput8.lib;dxguid.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\Input\ContactType.h" />
+    <ClInclude Include="src\Input\DirectInput\DirectInputMouse.h" />
     <ClInclude Include="src\Components\CustomPlayerData.h" />
     <ClInclude Include="src\Components\Camera.h" />
     <ClInclude Include="src\Components\CameraController.h" />
@@ -103,23 +107,25 @@
     <ClInclude Include="src\Components\GameState.h" />
     <ClInclude Include="src\Components\Input\InputBufferType.h" />
     <ClInclude Include="src\Constants.h" />
-    <ClInclude Include="src\Input\MouseState.h" />
-    <ClInclude Include="src\Input\Mouse.h" />
+    <ClInclude Include="src\Input\DirectInput\DirectInput.h" />
+    <ClInclude Include="src\Input\DirectInput\DirectInputDevice.h" />
+    <ClInclude Include="src\Input\Mouse\MouseState.h" />
+    <ClInclude Include="src\Input\Mouse\Mouse.h" />
     <ClInclude Include="src\Input\KeyConfig\Config.h" />
     <ClInclude Include="src\Input\KeyConfig\KeyString.h" />
     <ClInclude Include="src\Input\KeyConfig\KeyStringHash.h" />
     <ClInclude Include="src\MainModule.h" />
-    <ClInclude Include="src\Input\Binding.h" />
-    <ClInclude Include="src\Input\KeyboardBinding.h" />
-    <ClInclude Include="src\Input\IInputBinding.h" />
+    <ClInclude Include="src\Input\Bindings\Binding.h" />
+    <ClInclude Include="src\Input\Bindings\KeyboardBinding.h" />
+    <ClInclude Include="src\Input\Bindings\IInputBinding.h" />
     <ClInclude Include="src\Components\EmulatorComponent.h" />
     <ClInclude Include="src\Utilities\EnumBitwiseOperations.h" />
-    <ClInclude Include="src\Input\IInputDevice.h" />
+    <ClInclude Include="src\Input\Bindings\IInputDevice.h" />
     <ClInclude Include="src\Components\Input\JvsButtons.h" />
     <ClInclude Include="src\Components\Input\InputEmulator.h" />
     <ClInclude Include="src\Components\Input\InputState.h" />
-    <ClInclude Include="src\Input\Keyboard.h" />
-    <ClInclude Include="src\Input\KeyboardState.h" />
+    <ClInclude Include="src\Input\Keyboard\Keyboard.h" />
+    <ClInclude Include="src\Input\Keyboard\KeyboardState.h" />
     <ClInclude Include="src\Utilities\Math.h" />
     <ClInclude Include="src\Utilities\Operations.h" />
     <ClInclude Include="src\Components\SysTimer.h" />
@@ -132,6 +138,8 @@
     <ClInclude Include="src\FileSystem\TextFile.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Input\DirectInput\DirectInput.cpp" />
+    <ClCompile Include="src\Input\DirectInput\DirectInputMouse.cpp" />
     <ClCompile Include="src\Components\CustomPlayerData.cpp" />
     <ClCompile Include="src\Components\CameraController.cpp" />
     <ClCompile Include="src\Components\FastLoader.cpp" />
@@ -140,21 +148,20 @@
     <ClCompile Include="src\FileSystem\ConfigFile.cpp" />
     <ClCompile Include="src\Components\DebugComponent.cpp" />
     <ClCompile Include="src\Components\PlayerData.h" />
-    <ClCompile Include="src\Input\MouseState.cpp" />
-    <ClCompile Include="src\Input\Mouse.cpp" />
+    <ClCompile Include="src\Input\DirectInput\DirectInputDevice.cpp" />
+    <ClCompile Include="src\Input\Mouse\Mouse.cpp" />
     <ClCompile Include="src\Input\KeyConfig\Config.cpp" />
     <ClCompile Include="src\Input\KeyConfig\KeyString.cpp" />
     <ClCompile Include="src\Input\KeyConfig\KeyStringHash.cpp" />
     <ClCompile Include="src\MainModule.cpp" />
-    <ClCompile Include="src\Input\Binding.cpp" />
-    <ClCompile Include="src\Input\KeyboardBinding.cpp" />
-    <ClCompile Include="src\Input\IInputBinding.cpp" />
+    <ClCompile Include="src\Input\Bindings\Binding.cpp" />
+    <ClCompile Include="src\Input\Bindings\KeyboardBinding.cpp" />
     <ClCompile Include="src\dllmain.cpp" />
     <ClCompile Include="src\Components\EmulatorComponent.cpp" />
     <ClCompile Include="src\Components\Input\InputEmulator.cpp" />
     <ClCompile Include="src\Components\Input\InputState.cpp" />
-    <ClCompile Include="src\Input\Keyboard.cpp" />
-    <ClCompile Include="src\Input\KeyboardState.cpp" />
+    <ClCompile Include="src\Input\Keyboard\Keyboard.cpp" />
+    <ClCompile Include="src\Input\Keyboard\KeyboardState.cpp" />
     <ClCompile Include="src\Components\Input\TouchPanelEmulator.cpp" />
     <ClCompile Include="src\Utilities\Math.cpp" />
     <ClCompile Include="src\Utilities\Operations.cpp" />

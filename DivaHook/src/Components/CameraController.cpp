@@ -3,9 +3,9 @@
 #include "Input/InputState.h"
 #include "../Constants.h"
 #include "../MainModule.h"
-#include "../Input/Mouse.h"
-#include "../Input/Keyboard.h"
-#include "../Input/KeyboardBinding.h"
+#include "../Input/Mouse/Mouse.h"
+#include "../Input/Keyboard/Keyboard.h"
+#include "../Input/Bindings/KeyboardBinding.h"
 
 #define  GLUT_CURSOR_RIGHT_ARROW	0x0000
 #define  GLUT_CURSOR_NONE			0x0065

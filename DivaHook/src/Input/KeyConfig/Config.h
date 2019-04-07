@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include "KeyString.h"
 #include "KeyStringHash.h"
-#include "../Binding.h"
+#include "../Bindings/Binding.h"
 
 namespace DivaHook::Input::KeyConfig
 {

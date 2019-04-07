@@ -1,6 +1,6 @@
 #include "Config.h"
 #include "windows.h"
-#include "../KeyboardBinding.h"
+#include "../Bindings/KeyboardBinding.h"
 #include "../../Utilities/Operations.h"
 
 namespace DivaHook::Input::KeyConfig

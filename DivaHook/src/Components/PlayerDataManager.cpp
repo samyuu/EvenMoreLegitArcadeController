@@ -2,7 +2,7 @@
 #include <string>
 #include "../MainModule.h"
 #include "../Constants.h"
-#include "../Input/Keyboard.h"
+#include "../Input/Keyboard/Keyboard.h"
 #include "../FileSystem/ConfigFile.h"
 
 const std::string PLAYER_DATA_FILE_NAME = "playerdata.ini";

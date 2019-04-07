@@ -1,5 +1,5 @@
 #include "Mouse.h"
-#include "../MainModule.h"
+#include "../../MainModule.h"
 
 namespace DivaHook::Input
 {
@@ -7,6 +7,13 @@ namespace DivaHook::Input
 
 	Mouse::Mouse()
 	{
+		directInputMouse = new DirectInputMouse();
+	}
+
+	Mouse::~Mouse()
+	{
+		if (directInputMouse != nullptr)
+			delete directInputMouse;
 	}
 
 	Mouse* Mouse::GetInstance()
@@ -36,10 +43,30 @@ namespace DivaHook::Input
 		};
 	}
 
+	long Mouse::GetMouseWheel()
+	{
+		return currentState.MouseWheel;
+	}
+
+	long Mouse::GetDeltaMouseWheel()
+	{
+		return currentState.MouseWheel - lastState.MouseWheel;
+	}
+
 	bool Mouse::HasMoved()
 	{
-		auto delta = GetDeltaPosition();
+		POINT delta = GetDeltaPosition();
 		return delta.x != 0 || delta.y != 0;
+	}
+
+	bool Mouse::ScrolledUp()
+	{
+		return GetDeltaMouseWheel() > 0;
+	}
+
+	bool Mouse::ScrolledDown()
+	{
+		return GetDeltaMouseWheel() < 0;
 	}
 
 	void Mouse::SetPosition(int x, int y)
@@ -58,5 +85,11 @@ namespace DivaHook::Input
 
 		if (MainModule::DivaWindowHandle != NULL)
 			ScreenToClient(MainModule::DivaWindowHandle, &currentState.RelativePosition);
+
+		if (directInputMouse != nullptr)
+		{
+			directInputMouse->Poll();
+			currentState.MouseWheel += directInputMouse->GetMouseWheel();
+		}
 	}
 }

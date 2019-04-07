@@ -2,7 +2,7 @@
 #include "EmulatorComponent.h"
 #include "Camera.h"
 #include "../Constants.h"
-#include "../Input/Binding.h"
+#include "../Input/Bindings/Binding.h"
 
 namespace DivaHook::Components
 {

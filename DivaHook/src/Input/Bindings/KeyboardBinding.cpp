@@ -1,5 +1,5 @@
 #include "KeyboardBinding.h"
-#include "Keyboard.h"
+#include "../Keyboard/Keyboard.h"
 
 namespace DivaHook::Input
 {

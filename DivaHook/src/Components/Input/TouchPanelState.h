@@ -1,4 +1,5 @@
 #pragma once
+#include "ContactType.h"
 
 namespace DivaHook::Components
 {
@@ -10,6 +11,6 @@ namespace DivaHook::Components
 		float XPosition;
 		float YPosition;
 		float Pressure;
-		int ContactType;
+		ContactType ContactType;
 	};
 }
