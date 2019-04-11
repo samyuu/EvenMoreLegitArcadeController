@@ -17,7 +17,6 @@ namespace DivaHook::Input
 		bool AnyDown();
 		bool AnyTapped();
 		bool AnyReleased();
-		bool AnyDoubleTapped();
 	};
 }
 

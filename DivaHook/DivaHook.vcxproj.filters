@@ -105,9 +105,6 @@
     <ClInclude Include="src\Components\FastLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Input\Keyboard\Keyboard.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Input\Keyboard\KeyboardState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -123,9 +120,6 @@
     <ClInclude Include="src\Input\Bindings\IInputBinding.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Input\Bindings\IInputDevice.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Input\Bindings\KeyboardBinding.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -139,6 +133,27 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Components\Input\ContactType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\DirectInput\Controller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\IInputDevice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\Keyboard\Keyboard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\Bindings\Ds4Binding.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\DirectInput\Ds4\Ds4Button.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\DirectInput\Ds4\Ds4State.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\DirectInput\Ds4\DualShock4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -240,6 +255,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Input\DirectInput\DirectInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input\DirectInput\Controller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input\Bindings\Ds4Binding.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input\DirectInput\Ds4\Ds4State.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input\DirectInput\Ds4\DualShock4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,5 +1,5 @@
 #pragma once
-#include "../Bindings/IInputDevice.h"
+#include "../IInputDevice.h"
 #include "KeyboardState.h"
 #include "../../Utilities/Stopwatch.h"
 
@@ -16,7 +16,7 @@ namespace DivaHook::Input
 	public:
 		static Keyboard* GetInstance();
 		
-		void PollInput() override;
+		bool PollInput() override;
 		bool IsDown(BYTE keycode);
 		bool IsUp(BYTE keycode);
 		bool IsTapped(BYTE keycode);

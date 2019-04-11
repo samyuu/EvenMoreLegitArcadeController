@@ -1,5 +1,4 @@
 #include "KeyboardBinding.h"
-#include "../Keyboard/Keyboard.h"
 
 namespace DivaHook::Input
 {
@@ -24,10 +23,5 @@ namespace DivaHook::Input
 	bool KeyboardBinding::IsReleased()
 	{
 		return Keyboard::GetInstance()->IsReleased(Keycode);
-	}
-
-	bool KeyboardBinding::IsDoubleTapped()
-	{
-		return Keyboard::GetInstance()->IsDoubleTapped(Keycode);
 	}
 }

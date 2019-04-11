@@ -94,6 +94,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Input\Bindings\Ds4Binding.h" />
+    <ClInclude Include="src\Input\DirectInput\Ds4\Ds4Button.h" />
+    <ClInclude Include="src\Input\DirectInput\Ds4\Ds4State.h" />
+    <ClInclude Include="src\Input\DirectInput\Ds4\DualShock4.h" />
+    <ClInclude Include="src\Input\DirectInput\Controller.h" />
     <ClInclude Include="src\Components\Input\ContactType.h" />
     <ClInclude Include="src\Input\DirectInput\DirectInputMouse.h" />
     <ClInclude Include="src\Components\CustomPlayerData.h" />
@@ -120,7 +125,7 @@
     <ClInclude Include="src\Input\Bindings\IInputBinding.h" />
     <ClInclude Include="src\Components\EmulatorComponent.h" />
     <ClInclude Include="src\Utilities\EnumBitwiseOperations.h" />
-    <ClInclude Include="src\Input\Bindings\IInputDevice.h" />
+    <ClInclude Include="src\Input\IInputDevice.h" />
     <ClInclude Include="src\Components\Input\JvsButtons.h" />
     <ClInclude Include="src\Components\Input\InputEmulator.h" />
     <ClInclude Include="src\Components\Input\InputState.h" />
@@ -138,6 +143,10 @@
     <ClInclude Include="src\FileSystem\TextFile.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Input\Bindings\Ds4Binding.cpp" />
+    <ClCompile Include="src\Input\DirectInput\Ds4\Ds4State.cpp" />
+    <ClCompile Include="src\Input\DirectInput\Ds4\DualShock4.cpp" />
+    <ClCompile Include="src\Input\DirectInput\Controller.cpp" />
     <ClCompile Include="src\Input\DirectInput\DirectInput.cpp" />
     <ClCompile Include="src\Input\DirectInput\DirectInputMouse.cpp" />
     <ClCompile Include="src\Components\CustomPlayerData.cpp" />

@@ -7,23 +7,24 @@ namespace DivaHook::Input
 		HRESULT result = NULL;
 
 		result = DI_CreateDevice(GUID_SysMouse);
+		
+		if (FAILED(result))
+			return;
+
 		result = DI_SetDataFormat(&c_dfDIMouse);
 		result = DI_Acquire();
 	}
 
 	DirectInputMouse::~DirectInputMouse()
 	{
-		if (directInputdevice == nullptr)
-			return;
-
-		HRESULT result = NULL;
-
-		result = DI_Unacquire();
-		result = DI_Release();
+		DI_Dispose();
 	}
 
 	bool DirectInputMouse::Poll()
 	{
+		if (!DirectInputInitialized())
+			return FALSE;
+
 		HRESULT result = NULL;
 
 		result = DI_Poll();

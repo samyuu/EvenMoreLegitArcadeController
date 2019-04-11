@@ -13,6 +13,12 @@ namespace DivaHook::Utilities
 		return (degrees * M_PI) / 180.0f;
 	}
 
+	Vec2 GetDirection(float degrees)
+	{
+		float radians = ToRadians(degrees);
+		return Vec2(cos(radians), sin(radians));
+	}
+
 	Vec2 PointFromAngle(float degrees, float distance)
 	{
 		return Vec2(-1 * std::cos(ToRadians(degrees + 90)) * distance, -1 * std::sin(ToRadians(degrees + 90)) * distance);

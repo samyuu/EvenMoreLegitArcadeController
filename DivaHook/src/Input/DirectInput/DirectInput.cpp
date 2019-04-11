@@ -2,12 +2,17 @@
 
 namespace DivaHook::Input
 {
-	IDirectInput8 *IDirectInputInstance;
+	IDirectInput8 *IDirectInputInstance = nullptr;
 
 	HRESULT InitializeDirectInput(HMODULE module)
 	{
 		HRESULT result = DirectInput8Create(module, DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID**)&IDirectInputInstance, nullptr);
 		return result;
+	}
+
+	bool DirectInputInitialized()
+	{
+		return IDirectInputInstance != nullptr;
 	}
 
 	void DisposeDirectInput()

@@ -3,8 +3,8 @@
 // 2013-08-30T 14:41:15+09:00
 # file:			patch.txt
 # author:		samyuu
-# version:		4.00.00
-# date:			2019/04/07
+# version:		4.10.00
+# date:			2019/04/11
 # image_base:   0x00400C00
 
 // Address : Length : Original bytes                    : Patched bytes
@@ -77,6 +77,9 @@
 
 // Jump past the VP SelWatch button enabled checks
 0x00798108 : 0x0005 : E8 F3 01 E7 FF                    : EB 2D 90 90 90 
+
+// Write ram files to the current directory instead of Y:/ram
+0x00800D91 : 0x0001 : 75 								: EB 
 
 // Enable dw_gui sprite draw calls
 //0x0045AD12 : 0x0001 : 02                                : 00 

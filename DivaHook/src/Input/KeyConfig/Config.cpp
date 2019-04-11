@@ -1,6 +1,7 @@
 #include "Config.h"
 #include "windows.h"
 #include "../Bindings/KeyboardBinding.h"
+#include "../Bindings/Ds4Binding.h"
 #include "../../Utilities/Operations.h"
 
 namespace DivaHook::Input::KeyConfig
@@ -82,6 +83,94 @@ namespace DivaHook::Input::KeyConfig
 		{ "Escape", VK_ESCAPE },
 	};
 
+	Ds4ButtonMap Config::Ds4Map =
+	{
+		// Face Buttons
+		{ "DS4_SQUARE", DS4_SQUARE },
+		{ "Ds4_Square", DS4_SQUARE },
+
+		{ "DS4_CROSS", DS4_CROSS },
+		{ "Ds4_Cross", DS4_CROSS },
+
+		{ "DS4_CIRCLE", DS4_CIRCLE },
+		{ "Ds4_Circle", DS4_CIRCLE },
+
+		{ "DS4_TRIANGLE", DS4_TRIANGLE },
+		{ "Ds4_Triangle", DS4_TRIANGLE },
+
+		// Standard Buttons
+		{ "DS4_SHARE", DS4_SHARE },
+		{ "Ds4_Share", DS4_SHARE },
+
+		{ "DS4_OPTIONS", DS4_OPTIONS },
+		{ "Ds4_Options", DS4_OPTIONS },
+
+		{ "DS4_PS", DS4_PS },
+		{ "Ds4_PS", DS4_PS },
+
+		{ "DS4_TOUCH", DS4_TOUCH },
+		{ "Ds4_Touch", DS4_TOUCH },
+
+		{ "DS4_L1", DS4_L1 },
+		{ "Ds4_L1", DS4_L1 },
+
+		{ "DS4_R1", DS4_R1 },
+		{ "Ds4_R1", DS4_R1 },
+
+		// D-Pad Directions
+		{ "DS4_DPAD_UP", DS4_DPAD_UP },
+		{ "Ds4_DPad_Up", DS4_DPAD_UP },
+
+		{ "DS4_DPAD_RIGHT", DS4_DPAD_RIGHT },
+		{ "Ds4_DPad_Right", DS4_DPAD_RIGHT },
+
+		{ "DS4_DPAD_DOWN", DS4_DPAD_DOWN },
+		{ "Ds4_DPad_Down", DS4_DPAD_DOWN },
+
+		{ "DS4_DPAD_LEFT", DS4_DPAD_LEFT },
+		{ "Ds4_DPad_Left", DS4_DPAD_LEFT },
+
+		// Trigger Buttons
+		{ "DS4_L_TRIGGER", DS4_L_TRIGGER },
+		{ "Ds4_L_Trigger", DS4_L_TRIGGER },
+
+		{ "DS4_R_TRIGGER", DS4_R_TRIGGER },
+		{ "Ds4_R_Trigger", DS4_R_TRIGGER },
+		
+		// Joystick Buttons
+		{ "DS4_L3", DS4_L3 },
+		{ "Ds4_L3", DS4_L3 },
+
+		{ "DS4_R3", DS4_R3 },
+		{ "Ds4_R3", DS4_R3 },
+
+		// Left Joystick
+		{ "DS4_L_STICK_UP", DS4_L_STICK_UP },
+		{ "Ds4_L_Stick_Up", DS4_L_STICK_UP },
+
+		{ "DS4_L_STICK_RIGHT", DS4_L_STICK_RIGHT },
+		{ "Ds4_L_Stick_Right", DS4_L_STICK_RIGHT },
+
+		{ "DS4_L_STICK_DOWN", DS4_L_STICK_DOWN },
+		{ "Ds4_L_Stick_Down", DS4_L_STICK_DOWN },
+
+		{ "DS4_L_STICK_LEFT", DS4_L_STICK_LEFT },
+		{ "Ds4_L_Stick_Left", DS4_L_STICK_LEFT },
+
+		// Right Joystick
+		{ "DS4_R_STICK_UP", DS4_R_STICK_UP },
+		{ "Ds4_R_Stick_Up", DS4_R_STICK_UP },
+
+		{ "DS4_R_STICK_RIGHT", DS4_R_STICK_RIGHT },
+		{ "Ds4_R_Stick_Right", DS4_R_STICK_RIGHT },
+
+		{ "DS4_R_STICK_DOWN", DS4_R_STICK_DOWN },
+		{ "Ds4_R_Stick_Down", DS4_R_STICK_DOWN },
+
+		{ "DS4_R_STICK_LEFT", DS4_R_STICK_LEFT },
+		{ "Ds4_R_Stick_Left", DS4_R_STICK_LEFT },
+	};
+
 	void Config::BindConfigKeys(std::unordered_map<std::string, std::string> &configMap, const char *configKeyName, Binding &bindObj, std::vector<std::string> defaultKeys)
 	{
 		std::vector<std::string> keys;
@@ -118,7 +207,17 @@ namespace DivaHook::Input::KeyConfig
 				}
 				else
 				{
-					// printf("Bad key name!? Key: %s", key.c_str());
+					// just gonna be lazy for now and put this inside an else statement
+					auto ds4Button = Config::Ds4Map.find(key.c_str());
+
+					if (ds4Button != Config::Ds4Map.end())
+					{
+						bindObj.AddBinding(new Ds4Binding(ds4Button->second));
+					}
+					else
+					{
+						printf("Config::BindConfigKeys(): Unable to parse key: '%s'\n", key.c_str());
+					}
 				}
 			}
 		}

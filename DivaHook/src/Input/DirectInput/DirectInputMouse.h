@@ -9,7 +9,7 @@ namespace DivaHook::Input
 		DirectInputMouse();
 		~DirectInputMouse();
 
-		bool Poll() override;
+		bool Poll();
 
 		inline long GetXPosition() { return mouseState.lX; };
 		inline long GetYPosition() { return mouseState.lY; };

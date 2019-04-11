@@ -76,7 +76,7 @@ namespace DivaHook::Input
 		SetCursorPos(x, y);
 	}
 
-	void Mouse::PollInput()
+	bool Mouse::PollInput()
 	{
 		lastState = currentState;
 
@@ -88,8 +88,10 @@ namespace DivaHook::Input
 
 		if (directInputMouse != nullptr)
 		{
-			directInputMouse->Poll();
-			currentState.MouseWheel += directInputMouse->GetMouseWheel();
+			if (directInputMouse->Poll())
+				currentState.MouseWheel += directInputMouse->GetMouseWheel();
 		}
+
+		return true;
 	}
 }

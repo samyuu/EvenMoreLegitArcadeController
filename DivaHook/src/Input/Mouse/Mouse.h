@@ -1,5 +1,5 @@
 #pragma once
-#include "../Bindings/IInputDevice.h"
+#include "../IInputDevice.h"
 #include "../DirectInput/DirectInputMouse.h"
 #include "MouseState.h"
 
@@ -8,9 +8,11 @@ namespace DivaHook::Input
 	class Mouse : public IInputDevice
 	{
 	public:
+		~Mouse();
+		
 		static Mouse* GetInstance();
 
-		void PollInput() override;
+		bool PollInput() override;
 		
 		POINT GetPosition();
 		POINT GetRelativePosition();
@@ -27,7 +29,6 @@ namespace DivaHook::Input
 
 	private:
 		Mouse();
-		~Mouse();
 		MouseState lastState;
 		MouseState currentState;
 		DirectInputMouse* directInputMouse = nullptr;

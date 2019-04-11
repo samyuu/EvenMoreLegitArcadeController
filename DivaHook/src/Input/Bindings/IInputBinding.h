@@ -8,6 +8,5 @@ namespace DivaHook::Input
 		virtual bool IsDown() = 0;
 		virtual bool IsTapped() = 0;
 		virtual bool IsReleased() = 0;
-		virtual bool IsDoubleTapped() = 0;
 	};
 }

@@ -16,7 +16,7 @@ namespace DivaHook::Input
 		return instance;
 	}
 
-	void Keyboard::PollInput()
+	bool Keyboard::PollInput()
 	{
 		lastState = currentState;
 
@@ -54,6 +54,8 @@ namespace DivaHook::Input
 				}
 			}
 		}
+
+		return true;
 	}
 
 	bool Keyboard::IsDown(BYTE keycode)

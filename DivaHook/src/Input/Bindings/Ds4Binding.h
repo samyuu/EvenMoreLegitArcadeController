@@ -1,16 +1,16 @@
 #pragma once
 #include "IInputBinding.h"
-#include "../Keyboard/Keyboard.h"
+#include "../DirectInput/Ds4/DualShock4.h"
 
 namespace DivaHook::Input
 {
-	class KeyboardBinding : public IInputBinding
+	class Ds4Binding : public IInputBinding
 	{
 	public:
-		BYTE Keycode;
+		Ds4Button Button;
 
-		KeyboardBinding(BYTE keycode);
-		~KeyboardBinding();
+		Ds4Binding(Ds4Button button);
+		~Ds4Binding();
 
 		bool IsDown() override;
 		bool IsTapped() override;

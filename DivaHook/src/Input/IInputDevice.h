@@ -5,6 +5,6 @@ namespace DivaHook::Input
 	class IInputDevice
 	{
 	public:
-		virtual void PollInput() = 0;
+		virtual bool PollInput() = 0;
 	};
 }

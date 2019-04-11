@@ -7,5 +7,6 @@ namespace DivaHook::Input
 	extern IDirectInput8 *IDirectInputInstance;
 
 	HRESULT InitializeDirectInput(HMODULE module);
+	bool DirectInputInitialized();
 	void DisposeDirectInput();
 }

@@ -49,15 +49,4 @@ namespace DivaHook::Input
 
 		return false;
 	}
-
-	bool Binding::AnyDoubleTapped()
-	{
-		for (auto& binding : InputBindings)
-		{
-			if (binding->IsDoubleTapped())
-				return true;
-		}
-
-		return false;
-	}
 }
