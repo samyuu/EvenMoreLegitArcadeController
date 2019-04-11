@@ -44,7 +44,7 @@ namespace DivaHook::Components
 
 		setIfNotEqual(&playerData->level, customPlayerData->Level, 1);
 		setIfNotEqual(&playerData->level_plate_id, customPlayerData->LevelPlateId, 0);
-		setIfNotEqual(&playerData->vocaloid_point, customPlayerData->VocaloidPoint, 0);
+		// setIfNotEqual(&playerData->vocaloid_point, customPlayerData->VocaloidPoint, 0);
 		setIfNotEqual(&playerData->skin_equip, customPlayerData->SkinEquip, 0);
 		setIfNotEqual(&playerData->btn_se_equip, customPlayerData->BtnSeEquip, -1);
 
@@ -63,11 +63,11 @@ namespace DivaHook::Components
 			playerData->level_name = (char*)customPlayerData->LevelName->c_str();
 		}
 
-		if (false && Input::Keyboard::GetInstance()->IsTapped(VK_F12))
-		{
-			printf("PlayerDataManager::Update(): Loading config...\n");
-			LoadConfig();
-		}
+		// if (false && Input::Keyboard::GetInstance()->IsTapped(VK_F12))
+		// {
+		//	printf("PlayerDataManager::Update(): Loading config...\n");
+		//	LoadConfig();
+		// }
 	}
 
 	void PlayerDataManager::LoadConfig()
@@ -107,5 +107,12 @@ namespace DivaHook::Components
 		customPlayerData->ModuleEquip[1] = parseInt("module_equip[1]");
 		customPlayerData->SkinEquip = parseInt("skin_equip");
 		customPlayerData->BtnSeEquip = parseInt("btn_se_equip");
+
+		// These values should not be overwritten
+		// And also can be saved and loaded if implemented
+		playerData->hp_vol = parseInt("hp_vol");
+		playerData->act_vol = parseInt("act_vol");
+		playerData->act_toggle = parseInt("act_toggle");
+		playerData->vocaloid_point = parseInt("vocaloid_point");
 	}
 }
